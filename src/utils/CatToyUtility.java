@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class contains utility methods used to validate Cat Toys.
+ */
+
 public class CatToyUtility {
 
     // Create a HashMap where the key is the toy name (uppercase)

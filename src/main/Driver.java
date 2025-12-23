@@ -7,6 +7,10 @@ import utils.ScannerInput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The responsibility of the Driver class is to run the app and perform I/O with the user.
+ */
+
 public class Driver {
 
     DayCare daycare;

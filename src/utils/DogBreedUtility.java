@@ -3,6 +3,10 @@ package utils;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class contains utility methods used to validate Dog Breeds
+ */
+
 public class DogBreedUtility {
 
     private static  Set<String> dogBreeds = new HashSet<>();

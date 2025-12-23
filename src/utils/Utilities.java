@@ -1,6 +1,12 @@
 package utils;
 
+import models.Pet;
+
 import java.util.List;
+
+/**
+ * This class contains utility methods used throughout the system in multiple classes. This class stores the reusable Utility (general) methods in one area.
+ */
 
 public class Utilities {
     /**
@@ -11,7 +17,7 @@ public class Utilities {
      * The method does the truncating in this manner:
      * - multiply the number by 100 e.g. 16.543235523 * 100 = 1654.3235523
      * - cast the multiplied number as an in e.g. 1654.3235523 = 1654
-     * - finally, the multiplied and casted number is divided by 100 and returned e.g. 1654 = 16.54
+     * - finally, the multiplied and cast number is divided by 100 and returned e.g. 1654 = 16.54
      *
      * @param number Number to be truncated to two decimal places
      * @return the number, passed as a parameter, truncated to two decimal places (note: not rounded)
@@ -45,44 +51,51 @@ public class Utilities {
      * This method returns true if the numberToCheck is between min and max (both inclusive)
      *
      * @param numberToCheck The number whose range is being checked.
-     * @param min The minimum range number to check against (inclusive)
-     * @param max The maximum range number to check against (inclusive)
+     * @param min           The minimum range number to check against (inclusive)
+     * @param max           The maximum range number to check against (inclusive)
      * @return Returns true if the numberToCheck is between min and max (both inclusive), false otherwise.
      */
     public static boolean validRange(int numberToCheck, int min, int max) {
         return ((numberToCheck >= min) && (numberToCheck <= max));
     }
 
-    public static boolean validRange(double numbertoCheck, double min, double max, double delta) {
-        return ((numbertoCheck >= (min-delta)) && (numbertoCheck <= (max+delta)));
+    public static boolean validRange(double numberToCheck, double min, double max, double delta) {
+        return ((numberToCheck >= (min - delta)) && (numberToCheck <= (max + delta)));
 
     }
 
-    public static boolean validRange(double numbertoCheck, double min, double max) {
-        return ((numbertoCheck >= (min) && (numbertoCheck <= (max))));
+    public static boolean validRange(double numberToCheck, double min, double max) {
+        return ((numberToCheck >= (min) && (numberToCheck <= (max))));
 
     }
 
-    public static String truncateString(String stringToTruncate, int length){
+    public static String truncateString(String stringToTruncate, int length) {
         if (stringToTruncate != null) {
             if (stringToTruncate.length() <= length) {
                 return stringToTruncate;
             } else {
                 return stringToTruncate.substring(0, length);
             }
-        }
-        else
-            return null;
+        } else return null;
     }
 
-    public static boolean validStringlength(String strToCheck, int maxLength){
-        if (strToCheck != null ){
+    public static boolean validStringLength(String strToCheck, int maxLength) {
+        if (strToCheck != null) {
             return strToCheck.length() <= maxLength;
         }
         return false;
     }
 
-    public static boolean isValidIndex(List list, int indexToCheck){
+    public static boolean isValidIndex(List list, int indexToCheck) {
         return ((indexToCheck >= 0) && (indexToCheck < list.size()));
+    }
+
+    public static boolean isValidId(List lists, int idToCheck) {
+        for (Object list : lists) {
+            if (list.getId().equals(idToCheck)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

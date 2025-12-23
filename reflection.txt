@@ -1,0 +1,28 @@
+Name :
+
+Student Number:
+
+
+- Chronology of your implementation (what you did first, etc...)
+
+- Main difficulties you came across in your development of solution and how you solved them.
+
+- Any bugs remaining in the solution or unfinished elements of spec
+
+- Main learnings from your engagement with assignment
+
+- Answer the following questions:
+     1. Pat Purrs mentioned a problem their friend had with their pet system. What was the issue with that system, and how is your design intended to avoid the same problem?
+     2. Why does Pat want the Driver class to be simple and user-friendly, and how does this relate to the plan to eventually develop a mobile app?
+     3. Pat talked about future expansion of the daycare. What kinds of growth does the system need to support, and how should your code design accommodate this?
+     4. Besides cats and dogs, what additional animal does Pat plan to include next, and what does this imply for how you structure your inheritance hierarchy?
+
+Mandatory : Please list any references used in your development/ implementation of your submission.
+
+Please consider the following statements and choose one (delete the inappropriate one)
+
+- This is my work apart from the specific references noted above (and any code from class notes). I understand the code and can describe any parts of the solution if needs be;
+
+- This is not all my own work - I'm not sure if I understand what I am submitting. 
+
+
