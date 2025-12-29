@@ -58,6 +58,7 @@ public class DayCare {
 
     /**
      * listAllPets method
+     *
      * @return a String containing the details of all the pets in 'pets' along with the index number associated with each Pet object.
      * If no pets exist yet, "No Pets" should be returned.
      */
@@ -76,6 +77,7 @@ public class DayCare {
     }
 
     /**
+     * listAllCats method
      *
      * @return a String containing the details of all the cats in pets along with the index number associated with each Cat object.
      * If no cats exist yet, “No cats” should be returned.
@@ -97,6 +99,7 @@ public class DayCare {
     }
 
     /**
+     * listAllDogs method
      *
      * @return a String containing the details of all the dogs in pets along with the index number associated with each Dog object.
      * If no dogs exist yet, “No Dogs” should be returned.
@@ -119,30 +122,38 @@ public class DayCare {
     }
 
     /**
-     *
+     * listAllDangerousDogs method
+     * This method will list all the Dangerous dogs in the Day Care.
      * @return a String containing the details of all the dangerous dogs in pets along with the index number associated with each Dog object.
      * If no dogs exist yet, “No Dogs” should be returned.
      * If no dangerous dogs exist, “No Dangerous Dogs in the Kennels” should be returned.
      */
     public String listAllDangerousDogs() {
         String str = "";
+        boolean hasDogs = false; //to track if any dogs exist at all
 
         for (Pet pet : pets) {
-            if (pet instanceof Cat) {
-                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            if (pet instanceof Dog) { // check if the pet is a Dog first, then access its properties
+                hasDogs = true;
+                Dog dog = (Dog) pet; // cast the Pet to a Dog so you can call Dog-specific methods
+                if (dog.isDangerousBreed()) {
+                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+                }
             }
         }
 
-        if (str.isEmpty()) {
+        if (!hasDogs) {
             return "No Dogs";
+        } else if (str.isEmpty()) {
+            return "No Dangerous Dogs in the Kennels";
         } else {
             return str;
         }
-
     }
 
     /**
-     *
+     * listAllPetsByOwner method
+     * This method will list all the pets by the owners.
      * @param owner
      * @return This method should return the list of pets associated with that owner.
      * If no such Pet exist, “No Pet with owner ??” (include owner name) should be returned.
@@ -151,20 +162,18 @@ public class DayCare {
         String str = "";
 
         for (Pet pet : pets) {
-            if (pet instanceof Pet) {
-                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-            }
+            str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
         }
 
         if (str.isEmpty()) {
-            return "No Cats";
+            return "No Pets";
         } else {
             return str;
         }
-
     }
 
     /**
+     * listAllPetsThatStayMoreThanDays method
      *
      * @param numDays
      * @return the list of pets with that stay more than the input days.
@@ -174,17 +183,14 @@ public class DayCare {
         String str = "";
 
         for (Pet pet : pets) {
-            if (pet instanceof Cat) {
-                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-            }
+            str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
         }
 
         if (str.isEmpty()) {
-            return "No Cats";
+            return "No Pets";
         } else {
             return str;
         }
-
     }
 
     // TODO number methods
@@ -275,6 +281,7 @@ public class DayCare {
 
 
     // TODO Persistence methods
+
     /**
      * The load method uses the XStream component to read all the models.MessagePost objects from the posts.xml
      * file stored on the hard disk.  The read objects are loaded into the posts ArrayList
