@@ -2,6 +2,7 @@ package utils;
 
 import models.Pet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,12 +91,4 @@ public class Utilities {
         return ((indexToCheck >= 0) && (indexToCheck < list.size()));
     }
 
-    public static boolean isValidId(List lists, int idToCheck) {
-        for (Object list : lists) {
-            if (list.getId().equals(idToCheck)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

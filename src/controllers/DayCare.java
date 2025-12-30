@@ -1,18 +1,11 @@
 package controllers;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.Cat;
 import models.Dog;
 import models.Pet;
 import utils.Utilities;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * DayCare
@@ -41,6 +34,31 @@ public class DayCare {
         pets = new ArrayList<Pet>();
         this.maxNumberOfPets = maxNumberOfPets;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Pet> getPetsArray() {
+        return pets;
+    }
+
+    public void setPetsArray(ArrayList<Pet> pets) {
+        this.pets = pets;
+    }
+
+    public int getMaxNumberOfPets() {
+        return maxNumberOfPets;
+    }
+
+    public void setMaxNumberOfPets(int maxNumberOfPets) {
+        this.maxNumberOfPets = maxNumberOfPets;
+    }
+
     //TODO - CRUD Methods
 
     /**
@@ -54,6 +72,53 @@ public class DayCare {
         return pets.add(pet);
     }
 
+    public boolean updatePet(int id, Pet updatedDetails) {
+
+    }
+
+    public boolean updateDog(int id, Dog updatedDetails) {
+        //find the dog object by the index number.
+        Pet foundDog = getPetById(id);
+
+        //if the dog exists, use the details passed in the updateDetails parameter to
+        //update the found dog in the ArrayList.
+        if (foundDog !=null) {
+            foundDog.setOwner(updatedDetails.getOwner());
+            foundDog.setAge(updatedDetails.getAge());
+            foundDog.setSex(updatedDetails.getSex());
+            foundDog.setDaysAttending(updatedDetails.getDaysAttending());
+            foundDog.setId(updatedDetails.getId());
+            foundDog.setName(updatedDetails.getName());
+            foundDog.setBreed(updatedDetails.getBreed());
+            foundDog.setDangerousBreed(updatedDetails.isDangerousBreed());
+            foundDog.setNeutered(updatedDetails.isNeutered());
+            return true;
+        }
+        //if the dog was not found, return false, indicating that the update was not successful.
+        return false;
+    }
+
+    public boolean updateCat(int id, Cat updatedDetails) {
+        //find the cat object by the index number.
+        Pet foundCat = getPetById(id);
+
+        //if the cat exists, use the details passed in the updateDetails parameter to
+        //update the found cat in the ArrayList.
+        if (foundCat !=null) {
+            foundCat.setOwner(updatedDetails.getOwner());
+            foundCat.setAge(updatedDetails.getAge());
+            foundCat.setSex(updatedDetails.getSex());
+            foundCat.setDaysAttending(updatedDetails.getDaysAttending());
+            foundCat.setId(updatedDetails.getId());
+            foundCat.setName(updatedDetails.getName());
+            foundCat.setIndoorCat(updatedDetails.isIndoorCat());
+            foundCat.setFavouriteToy(updatedDetails.getFavouriteToy());
+            return true;
+        }
+        //if the cat was not found, return false, indicating that the update was not successful.
+        return false;
+    }
+
     // TODO Reporting Methods
 
     /**
@@ -63,15 +128,13 @@ public class DayCare {
      * If no pets exist yet, "No Pets" should be returned.
      */
     public String listAllPets() {
-        String str = "";
-
-        for (Pet pet : pets) {
-            str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-        }
-
-        if (str.isEmpty()) {
+        if (pets.isEmpty()) {
             return "No Pets";
         } else {
+            String str = "";
+            for (Pet pet : pets) {
+                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            }
             return str;
         }
     }
@@ -83,18 +146,20 @@ public class DayCare {
      * If no cats exist yet, “No cats” should be returned.
      */
     public String listAllCats() {
-        String str = "";
-
-        for (Pet pet : pets) {
-            if (pet instanceof Cat) {
-                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-            }
-        }
-
-        if (str.isEmpty()) {
-            return "No Cats";
+        if (pets.isEmpty()) {
+            return "No Pets";
         } else {
-            return str;
+            String str = "";
+            for (Pet pet : pets) {
+                if (pet instanceof Cat) {
+                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No Cats";
+            } else {
+                return str;
+            }
         }
     }
 
@@ -105,71 +170,66 @@ public class DayCare {
      * If no dogs exist yet, “No Dogs” should be returned.
      */
     public String listAllDogs() {
-        String str = "";
-
-        for (Pet pet : pets) {
-            if (pet instanceof Dog) {
-                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            for (Pet pet : pets) {
+                if (pet instanceof Dog) {
+                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No Dogs";
+            } else {
+                return str;
             }
         }
-
-        if (str.isEmpty()) {
-            return "No Dogs";
-        } else {
-            return str;
-        }
-
     }
 
     /**
      * listAllDangerousDogs method
      * This method will list all the Dangerous dogs in the Day Care.
+     *
      * @return a String containing the details of all the dangerous dogs in pets along with the index number associated with each Dog object.
      * If no dogs exist yet, “No Dogs” should be returned.
      * If no dangerous dogs exist, “No Dangerous Dogs in the Kennels” should be returned.
      */
     public String listAllDangerousDogs() {
-        String str = "";
-        boolean hasDogs = false; //to track if any dogs exist at all
-
-        for (Pet pet : pets) {
-            if (pet instanceof Dog) { // check if the pet is a Dog first, then access its properties
-                hasDogs = true;
-                Dog dog = (Dog) pet; // cast the Pet to a Dog so you can call Dog-specific methods
-                if (dog.isDangerousBreed()) {
-                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            boolean hasDogs = false; //check if any dogs exist at all
+            for (Pet pet : pets) {
+                if (pet instanceof Dog dog && (dog.isDangerousBreed())) { //check if the pet is a Dog first, then access its properties
+                    hasDogs = true;
+                    {
+                        str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+                    }
                 }
             }
-        }
-
-        if (!hasDogs) {
-            return "No Dogs";
-        } else if (str.isEmpty()) {
-            return "No Dangerous Dogs in the Kennels";
-        } else {
-            return str;
+            if (!hasDogs) {
+                return "No Dogs";
+            } else if (str.isEmpty()) {
+                return "No Dangerous Dogs in the Kennels";
+            } else {
+                return str;
+            }
         }
     }
 
     /**
      * listAllPetsByOwner method
      * This method will list all the pets by the owners.
+     *
      * @param owner
      * @return This method should return the list of pets associated with that owner.
      * If no such Pet exist, “No Pet with owner ??” (include owner name) should be returned.
      */
     public String listAllPetsByOwner(String owner) {
         String str = "";
-
-        for (Pet pet : pets) {
-            str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-        }
-
-        if (str.isEmpty()) {
-            return "No Pets";
-        } else {
-            return str;
-        }
+        return;
     }
 
     /**
@@ -195,39 +255,73 @@ public class DayCare {
 
     // TODO number methods
 
+    /**
+     *
+     * @return
+     */
     public int numberOfPets() {
-
+        return pets.size();
     }
 
     public int numberOfCats() {
-
+        int number = 0;
+        for (Pet pet : pets) {
+            if (pet instanceof Cat) {
+                number++;
+            }
+        }
+        return number;
     }
 
     public int numberOfDogs() {
-
+        int number = 0;
+        for (Pet pet : pets) {
+            if (pet instanceof Dog) {
+                number++;
+            }
+        }
+        return number;
     }
 
     public int numberOfDangerousDogs() {
+        int number = 0;
+        boolean hasDogs = false;
 
+        for (Pet pet : pets) {
+            if (pet instanceof Dog dog && (dog.isDangerousBreed())) {
+                hasDogs = true;
+                number++;
+            }
+        }
+        return number;
     }
 
     public int numberOfIndoorCats() {
+        int number = 0;
+        boolean hasCats = false;
 
+        for (Pet pet : pets) {
+            if (pet instanceof Cat cat && (cat.isIndoorCat())) {
+                hasCats = true;
+                number++;
+            }
+        }
+        return number;
     }
 
     //TODO get Pets methods
 
     /**
      * getPetByIndex method
-     * This method returns a Pet object at the location index, which is passed as a parameter.
+     * This method returns a Pet object at the location PetIndex, which is passed as a parameter.
      *
-     * @param index
+     * @param PetIndex
      * @return the object at that position, if it does exist.
-     * if the passed index is not valid, return null.
+     * if the passed PetIndex is not valid, return null.
      */
-    public Pet getPetByIndex(int index) {
-        if (Utilities.isValidIndex(pets, index)) {
-            return pets.get(index);
+    public Pet getPetByIndex(int PetIndex) {
+        if (Utilities.isValidIndex(pets, PetIndex)) {
+            return pets.get(PetIndex);
         }
         return null;
     }
@@ -236,13 +330,13 @@ public class DayCare {
      * getPetById method
      * This method returns a Pet object with that exact id (ignoring case), which is passed as a parameter.
      *
-     * @param id
+     * @param PetId
      * @return the object with that id, if it does exist.
      * if the passed id is not found, return null.
      */
-    public Pet getPetById(int id) {
-        if (Utilities.isValidId(pets, id)) {
-            return pets.get(id);
+    public Pet getPetById(int PetId) {
+        if (isValidId(PetId)) {
+            return pets.get(PetId);
         }
         return null;
     }
@@ -273,51 +367,25 @@ public class DayCare {
      * If the passed index is not valid, return null
      */
     public Pet deletePetById(int idToDelete) {
-        if (Utilities.isValidId(pets, idToDelete)) {
+        if (isValidId(idToDelete)) {
             return pets.remove(idToDelete);
         }
         return null;
     }
 
+    public boolean isValidId(int id) {
+        for (Pet p : pets) {
+            if (p.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public double getWeeklyIncome() {
+
+    }
 
     // TODO Persistence methods
 
-    /**
-     * The load method uses the XStream component to read all the models.MessagePost objects from the posts.xml
-     * file stored on the hard disk.  The read objects are loaded into the posts ArrayList
-     *
-     * @throws Exception An exception is thrown if an error occurred during the load e.g. a missing file.
-     */
-    @SuppressWarnings("unchecked")
-    public void load() throws Exception {
-        //list of classes that you wish to include in the serialisation, separated by a comma
-        Class<?>[] classes = new Class[]{DayCare.class, Pet.class, Cat.class, Dog.class};
-
-        //setting up the xstream object with default security and the above classes
-        XStream xstream = new XStream(new DomDriver());
-        XStream.setupDefaultSecurity(xstream);
-        xstream.allowTypes(classes);
-
-        //doing the actual serialisation to an XML file
-        ObjectInputStream in = xstream.createObjectInputStream(new FileReader("Pets.xml"));
-        pets = (ArrayList<Pet>) in.readObject();
-        in.close();
-    }
-
-    /**
-     * The save method uses the XStream component to write all the objects in the posts ArrayList
-     * to the posts.xml file stored on the hard disk.
-     *
-     * @throws Exception An exception is thrown if an error occurred during the save e.g. drive is full.
-     */
-    public void save() throws Exception {
-        XStream xstream = new XStream(new DomDriver());
-        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("Pets.xml"));
-        out.writeObject(pets);
-        out.close();
-
-    }
 }
-
-
-
