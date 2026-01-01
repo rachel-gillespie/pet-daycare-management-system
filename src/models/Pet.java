@@ -71,9 +71,7 @@ public class Pet {
         this.name = name;
     }
 
-    public double calculateWeeklyFee() {
-        return numberOfDaysInKennel();  //multiply by costs
-    }
+    public double calculateWeeklyFee() { return 0; }
 
     public void checkIn(int dayIndex) {
         // if valid dayIndex >=0 <= 5
