@@ -72,23 +72,33 @@ public class DayCare {
         return pets.add(pet);
     }
 
-    public boolean updatePet(int id, Pet updatedDetails) {
+    public Pet updatePet(int id, Pet updatedDetails) {
+        Pet foundPet = getPetById(id);
 
+        if (foundPet != null) {
+            foundPet.setOwner(updatedDetails.getOwner());
+            foundPet.setAge(updatedDetails.getAge());
+            foundPet.setSex(updatedDetails.getSex());
+            foundPet.setDaysAttending(updatedDetails.getDaysAttending());
+            foundPet.setId(updatedDetails.getId());
+            foundPet.setName(updatedDetails.getName());
+            if (updatedDetails instanceof Dog) {
+                updateDog(id,(Dog) foundPet); //casting updated details to Dog
+            }
+            else if (updatedDetails instanceof Cat) {
+                updateCat(id,(Cat) foundPet);
+            }
+        }
+        return foundPet;
     }
 
     public boolean updateDog(int id, Dog updatedDetails) {
         //find the dog object by the index number.
-        Pet foundDog = getPetById(id);
+        Dog foundDog = (Dog) getPetById(id);
 
         //if the dog exists, use the details passed in the updateDetails parameter to
         //update the found dog in the ArrayList.
         if (foundDog !=null) {
-            foundDog.setOwner(updatedDetails.getOwner());
-            foundDog.setAge(updatedDetails.getAge());
-            foundDog.setSex(updatedDetails.getSex());
-            foundDog.setDaysAttending(updatedDetails.getDaysAttending());
-            foundDog.setId(updatedDetails.getId());
-            foundDog.setName(updatedDetails.getName());
             foundDog.setBreed(updatedDetails.getBreed());
             foundDog.setDangerousBreed(updatedDetails.isDangerousBreed());
             foundDog.setNeutered(updatedDetails.isNeutered());
@@ -100,23 +110,21 @@ public class DayCare {
 
     public boolean updateCat(int id, Cat updatedDetails) {
         //find the cat object by the index number.
-        Pet foundCat = getPetById(id);
+        Cat foundCat = (Cat) getPetById(id);
 
         //if the cat exists, use the details passed in the updateDetails parameter to
         //update the found cat in the ArrayList.
         if (foundCat !=null) {
-            foundCat.setOwner(updatedDetails.getOwner());
-            foundCat.setAge(updatedDetails.getAge());
-            foundCat.setSex(updatedDetails.getSex());
-            foundCat.setDaysAttending(updatedDetails.getDaysAttending());
-            foundCat.setId(updatedDetails.getId());
-            foundCat.setName(updatedDetails.getName());
             foundCat.setIndoorCat(updatedDetails.isIndoorCat());
             foundCat.setFavouriteToy(updatedDetails.getFavouriteToy());
             return true;
         }
         //if the cat was not found, return false, indicating that the update was not successful.
         return false;
+    }
+
+    public Pet removePet(int id) {
+
     }
 
     // TODO Reporting Methods
@@ -204,9 +212,7 @@ public class DayCare {
             for (Pet pet : pets) {
                 if (pet instanceof Dog dog && (dog.isDangerousBreed())) { //check if the pet is a Dog first, then access its properties
                     hasDogs = true;
-                    {
                         str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-                    }
                 }
             }
             if (!hasDogs) {
@@ -229,7 +235,7 @@ public class DayCare {
      */
     public String listAllPetsByOwner(String owner) {
         String str = "";
-        return;
+        return "";
     }
 
     /**
@@ -240,17 +246,7 @@ public class DayCare {
      * If no such Pet exist, “No Pet stays longer than ??” (include num days) should be returned.
      */
     public String listAllPetsThatStayMoreThanDays(int numDays) {
-        String str = "";
-
-        for (Pet pet : pets) {
-            str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-        }
-
-        if (str.isEmpty()) {
-            return "No Pets";
-        } else {
-            return str;
-        }
+        return "";
     }
 
     // TODO number methods
@@ -311,6 +307,10 @@ public class DayCare {
 
     //TODO get Pets methods
 
+    public Pet getPet(String pet) {
+        return;
+    }
+
     /**
      * getPetByIndex method
      * This method returns a Pet object at the location PetIndex, which is passed as a parameter.
@@ -352,7 +352,7 @@ public class DayCare {
      * If the passed index is not valid, return null.
      */
     public Pet deletePetByIndex(int indexToDelete) {
-        if (Utilities.isValidIndex(pets, indexToDelete)) {
+        if (isValidPetIndex(indexToDelete)) {
             return pets.remove(indexToDelete);
         }
         return null;
@@ -368,7 +368,9 @@ public class DayCare {
      */
     public Pet deletePetById(int idToDelete) {
         if (isValidId(idToDelete)) {
-            return pets.remove(idToDelete);
+            Pet petToDelete = getPetById(idToDelete);
+            pets.remove(petToDelete);
+            return petToDelete;
         }
         return null;
     }
@@ -382,10 +384,39 @@ public class DayCare {
         return false;
     }
 
+    public boolean isValidPetIndex(int index) {
+        return Utilities.isValidIndex(pets, index);
+    }
+
     public double getWeeklyIncome() {
+        return 0.0;
+    }
+
+    public double getAverageNumDaysPerWeek() {
+        return 0.0;
+    }
+
+    public Pet findDogByOwnerAndBreedAndAge(String name, String breed, int age) {
+        return "";
+    }
+
+    public String getPetsByOwnersName(String name) {
+        return "";
+    }
+
+    public void initName(String) {
 
     }
 
     // TODO Persistence methods
+
+    public void load() {
+
+    }
+
+    public void save() {
+
+    }
+
 
 }
