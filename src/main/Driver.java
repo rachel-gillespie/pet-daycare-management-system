@@ -44,41 +44,41 @@ public class Driver {
         int option = ScannerInput.readNextInt("""
                 ------------------------------------------------------------------
                 |                        Pet Day Care                            |
-                ------------------------------------------------------------------                                                              | 
+                ------------------------------------------------------------------
                 |   1) Pets CRUD Menu                                            |
-                |   2) Reports Menu                                              | 
+                |   2) Reports Menu                                              |
                 ------------------------------------------------------------------
                 |   3) Search Pets                                               |
-                |   4) Sort Pets                                                 |            
+                |   4) Sort Pets                                                 |
                 ------------------------------------------------------------------
-                |   5) Save pets to pets.xml                                     |  
-                |   6) Load pets from pets.xml                                   |  
+                |   5) Save pets to pets.xml                                     |
+                |   6) Load pets from pets.xml                                   |
                 ------------------------------------------------------------------
-                |   0)  Exit                                                     |  
+                |   0)  Exit                                                     |
                 ------------------------------------------------------------------
-                ==>> """);
+                ==>>""");
         return option;
     }
 
     private void runMenu() {
-    int option = mainMenu();
+        int option = mainMenu();
 
-    while (option != 0) {
-        switch (option) {
-            case 1 -> crudMenu();
-            case 2 -> reportsMenu();
-            case 3 -> searchPets();
-            case 4 -> sortPets();
-            case 5 -> savePets();
-            case 6 -> loadPets();
-            default -> System.out.println("Invalid option entered: " + option);
+        while (option != 0) {
+            switch (option) {
+                case 1 -> crudMenu();
+                case 2 -> reportsMenu();
+                case 3 -> searchPets();
+                case 4 -> sortPets();
+                case 5 -> savePets();
+                case 6 -> loadPets();
+                default -> System.out.println("Invalid option entered: " + option);
+            }
+            //pause the program so that the user can read what we just printed to the terminal window
+            ScannerInput.readNextLine("\nPress enter key to continue...");
+
+            //display the main menu again
+            option = mainMenu();
         }
-        //pause the program so that the user can read what we just printed to the terminal window
-        ScannerInput.readNextLine("\nPress enter key to continue...");
-
-        //display the main menu again
-        option = mainMenu();
-    }
         //TODO - write code to call appropriate method based on value in option
 
         //the user chose option 0, so exit the program
@@ -89,25 +89,25 @@ public class Driver {
 
     private void crudMenu() {
         int option = ScannerInput.readNextInt("""
-                    -------------------------------------
-                    |           Pets CRUD Menu          |
-                    -------------------------------------
-                    |   1) Add a new Pet                |
-                    |   2) List all Pets                |
-                    |   3) Update Pet Information       |
-                    |   4) Delete a Pet                 |
-                    -------------------------------------
-                    |   0) Return to Main Menu          |
-                    -------------------------------------
-                    ==>> """);
+                -------------------------------------
+                |           Pets CRUD Menu          |
+                -------------------------------------
+                |   1) Add a new Pet                |
+                |   2) List all Pets                |
+                |   3) Update Pet Information       |
+                |   4) Delete a Pet                 |
+                -------------------------------------
+                |   0) Return to Main Menu          |
+                -------------------------------------
+                ==>>""");
 
 
         switch (option) {
             case 0 -> runMenu();
             case 1 -> addPetMenu();
             case 2 -> showPets();
-//            case 3 ->
-//            case 4 ->
+            case 3 -> updatePetMenu();
+            case 4 -> deletePetMenu();
             default -> System.out.println("Invalid option entered: " + option);
         }
 
@@ -115,22 +115,22 @@ public class Driver {
 
     private void reportsMenu() {
         int option = ScannerInput.readNextInt("""
-                    ---------------------------------------------
-                    |              Pets Report Menu             |
-                    ---------------------------------------------
-                    |   1) List all Pets                        |
-                    |   2) List all Dogs                        |
-                    |   3) List all Cats                        |
-                    |   4) List all Dangerous Dogs              |
-                    |   5) List all Indoor Cats                 |
-                    |   6) List all Dogs older than an age      |
-                    |   7) List all Cats by Favourite Toy       |
-                    |   8) List all Pets that are neutered      |
-                    |   9) Produce Weekly Income Report         |
-                    ---------------------------------------------
-                    |   0) Return to Main Menu                  |
-                    ---------------------------------------------
-                    ==>> """);
+                ---------------------------------------------
+                |              Pets Report Menu             |
+                ---------------------------------------------
+                |   1) List all Pets                        |
+                |   2) List all Dogs                        |
+                |   3) List all Cats                        |
+                |   4) List all Dangerous Dogs              |
+                |   5) List all Indoor Cats                 |
+                |   6) List all Dogs older than an age      |
+                |   7) List all Cats by Favourite Toy       |
+                |   8) List all Pets that are neutered      |
+                |   9) Produce Weekly Income Report         |
+                ---------------------------------------------
+                |   0) Return to Main Menu                  |
+                ---------------------------------------------
+                ==>>""");
 
         switch (option) {
             case 1 -> showPets();
@@ -156,15 +156,15 @@ public class Driver {
 
     private void addPetMenu() {
         int option = ScannerInput.readNextInt("""
-                    -------------------------------------
-                    |           Add Pet Menu            |
-                    -------------------------------------
-                    |   1) Add a new Dog                |
-                    |   2) Add a new Cat                |
-                    -------------------------------------
-                    |   0) Return to Main Menu          |
-                    -------------------------------------
-                    ==>> """);
+                -------------------------------------
+                |           Add Pet Menu            |
+                -------------------------------------
+                |   1) Add a new Dog                |
+                |   2) Add a new Cat                |
+                -------------------------------------
+                |   0) Return to Main Menu          |
+                -------------------------------------
+                ==>>""");
 
         String owner = ScannerInput.readNextLine("Enter Owner's Name: ");
         int age = ScannerInput.readNextInt("Enter Pet's age: ");
@@ -190,8 +190,6 @@ public class Driver {
 
         boolean isAdded = false;
 
-
-
         switch (option) {
             case 1 -> {
 
@@ -205,7 +203,7 @@ public class Driver {
                 }
                 boolean dangerousBreed = Utilities.YNtoBoolean(dangerousBreedInput);
 
-                Dog dog = new Dog(name,age,sex,owner,neutered,id,breed,dangerousBreed);
+                Dog dog = new Dog(name, age, sex, owner, neutered, id, breed, dangerousBreed);
                 isAdded = daycare.addPet(dog);
 
             }
@@ -220,9 +218,10 @@ public class Driver {
                     favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
                 }
 
-                Cat cat = new Cat(owner,age,sex,id,name,neutered,indoorCat,favouriteToy);
+                Cat cat = new Cat(owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
                 isAdded = daycare.addPet(cat);
             }
+            case 0 -> runMenu();
             default -> System.out.println("Invalid option entered: " + option);
         }
         if (isAdded) {
@@ -233,9 +232,147 @@ public class Driver {
     }
 
     //print all the pets in daycare i.e. array list.
-    private void showPets(){
+    private void showPets() {
         System.out.println("List of all Pets are:");
         System.out.println(daycare.listAllPets());
+    }
+
+    //------------------------------------------------------------------------------------------
+    //  Option 2 - Update Posts - if posts exist, the user is asked if it is a message or a photo post
+    //             and the required details are then gathered before adding the specific object
+    //------------------------------------------------------------------------------------------
+    private void updatePetMenu() {
+
+        if (daycare.numberOfPets() > 0) {
+            boolean isUpdated = false;
+
+            int option = ScannerInput.readNextInt("""
+                    -------------------------------------
+                    |           Update Pet Menu         |
+                    -------------------------------------
+                    |   1) Update Dog Information       |
+                    |   2) Update Cat Information       |
+                    -------------------------------------
+                    |   0) Return to Main Menu          |
+                    -------------------------------------
+                    ==>>""");
+
+            showPets();
+            if (daycare.numberOfPets() > 0) {
+                int idToUpdate = ScannerInput.readNextInt("Enter the id of the pet to update ==> ");
+                    String owner = ScannerInput.readNextLine("Enter Owner's Name: ");
+                    int age = ScannerInput.readNextInt("Enter Pet's age: ");
+                    char sex = ScannerInput.readNextChar("Enter Pet's sex (m/f): ");
+                    while (sex != 'm' && sex != 'f') {
+                        sex = ScannerInput.readNextChar("Invalid option " + sex + ", Enter Pet's sex (m/f): ");
+                    }
+                    boolean[] daysAttending = new boolean[5];
+                    String[] weekDays = {"Mon", "Tues", "Wed", "Thurs", "Fri"};
+                    for (int i = 0; i < 5; i++) {
+                        daysAttending[i] = Utilities.YNtoBoolean(ScannerInput.readNextChar("Attending " + weekDays[i] + "? (y/n)"));
+                    }
+                    int id = ScannerInput.readNextInt("Enter Pet id number: ");
+                    while (!daycare.isValidId(id)) {
+                        id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
+                    }
+                    String name = ScannerInput.readNextLine("Enter the Pet's name: ");
+                    char neuteredInput = ScannerInput.readNextChar("Is pet neutered? (y/n): ");
+                    while (neuteredInput != ('y') && neuteredInput != 'n') {
+                        neuteredInput = ScannerInput.readNextChar("Invalid option " + neuteredInput + " Is pet neutered? (y/n): ");
+                    }
+                    boolean neutered = Utilities.YNtoBoolean(neuteredInput);
+
+                    switch (option) {
+                        case 1 -> {
+
+                            String breed = ScannerInput.readNextLine("What breed is your dog?: ");
+                            while (!DogBreedUtility.checkBreed(breed)) {
+                                breed = ScannerInput.readNextLine("Invalid breed, What breed is your dog?: ");
+                            }
+                            char dangerousBreedInput = ScannerInput.readNextChar("Is dog dangerous breed? (y/n): ");
+                            while (dangerousBreedInput != ('y') && dangerousBreedInput != 'n') {
+                                dangerousBreedInput = ScannerInput.readNextChar("Invalid option " + dangerousBreedInput + " Is dog dangerous breed? (y/n): ");
+                            }
+                            boolean dangerousBreed = Utilities.YNtoBoolean(dangerousBreedInput);
+
+                            Dog dog = new Dog(name, age, sex, owner, neutered, id, breed, dangerousBreed);
+                            isUpdated = daycare.updatePet(idToUpdate, name, age, sex, owner, neutered, id, breed, dangerousBreed);
+
+                        }
+                        case 2 -> {
+                            char indoorCatInput = ScannerInput.readNextChar("Is the cat an indoor cat? (y/n): ");
+                            while (indoorCatInput != 'y' && indoorCatInput != 'n') {
+                                indoorCatInput = ScannerInput.readNextChar("Invalid option " + indoorCatInput + ", Is the cat an indoor cat? (y/n): ");
+                            }
+                            boolean indoorCat = Utilities.YNtoBoolean(indoorCatInput);
+                            String favouriteToy = ScannerInput.readNextLine("What is the cat's favourite toy?: ");
+                            while (!CatToyUtility.isCatToy(favouriteToy)) {
+                                favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
+                            }
+
+                            Cat cat = new Cat(owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
+                            isUpdated = daycare.updatePet(idToUpdate, owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
+                        }
+                        case 0 -> runMenu();
+                        default -> System.out.println("Invalid option entered: " + option);
+                    }
+                    if (isUpdated) {
+                        System.out.println("Pet Updated Successfully");
+                    } else {
+                        System.out.println("No Pet Updated");
+                    }
+                }
+            } else {
+                System.out.println("No pets added yet");
+            }
+    }
+
+    private void deletePetMenu() {
+        if (daycare.numberOfPets() > 0) {
+
+            int option = ScannerInput.readNextInt("""
+                    -------------------------------------
+                    |           Delete Pet Menu         |
+                    -------------------------------------
+                    |   1) Delete Pet by Index          |
+                    |   2) Delete Pet by ID             |
+                    -------------------------------------
+                    |   0) Return to Main Menu          |
+                    -------------------------------------
+                    ==>>""");
+            switch (option) {
+                case 1 -> {
+                    showPets();
+                    if (daycare.numberOfPets() > 0) {
+                        //only ask the user to choose the pet to delete if pets exist
+                        int indexToDelete = ScannerInput.readNextInt("Enter the index of the pet to delete ==> ");
+                        //pass the index of the pet to DayCare for deleting and check for success.
+                        Pet petToDelete = daycare.deletePetByIndex(indexToDelete);
+                        if (petToDelete != null) {
+                            System.out.println("Delete Successful! Deleted pet: " + petToDelete.toString());
+                        } else {
+                            System.out.println("Delete NOT Successful");
+                        }
+                    }
+                }
+                case 2 -> {
+                    showPets();
+                    if (daycare.numberOfPets() > 0) {
+                        //only ask the user to choose the pet to delete if pets exist
+                        int idToDelete = ScannerInput.readNextInt("Enter the index of the pet to delete ==> ");
+                        //pass the id of the pet to DayCare for deleting and check for success.
+                        Pet petToDelete = daycare.deletePetById(idToDelete);
+                        if (petToDelete != null) {
+                            System.out.println("Delete Successful! Deleted pet: " + petToDelete.toString());
+                        } else {
+                            System.out.println("Delete NOT Successful");
+                        }
+                    }
+                }
+                case 0 -> runMenu();
+                default -> System.out.println("Invalid option entered: " + option);
+            }
+        }
     }
 
     private void exitApp() {

@@ -84,7 +84,6 @@ public class DayCare implements ISerializer {
 
     public Pet updatePet(int id, Pet updatedDetails) {
         Pet foundPet = getPetById(id);
-        foundPet = (Dog) getPetById(id);
 
         if (foundPet != null) {
             foundPet.setOwner(updatedDetails.getOwner());
@@ -433,6 +432,11 @@ public class DayCare implements ISerializer {
 
     //TODO get Pets methods
 
+    /**
+     * getPet method
+     * @param name
+     * @return
+     */
     public Pet getPet(String name) {
         for (Pet p : pets) {
             if (p.getName().equals(name)) {
