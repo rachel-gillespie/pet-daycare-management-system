@@ -9,8 +9,8 @@ public class Cat extends Pet {
     private boolean indoorCat = true;
     private String favouriteToy = "not known";
 
-    public Cat(String owner, int age, char sex, int id, String name, boolean indoorCat, String favouriteToy) {
-        super(owner, age, sex, id, name);
+    public Cat(String owner, int age, char sex, int id, String name, boolean neutered, boolean indoorCat, String favouriteToy) {
+        super(owner, age, sex, id, name, neutered);
         this.indoorCat = indoorCat;
         this.favouriteToy = favouriteToy;
     }

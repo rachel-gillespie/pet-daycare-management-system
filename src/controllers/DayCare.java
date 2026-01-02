@@ -83,6 +83,7 @@ public class DayCare implements ISerializer {
 
     public Pet updatePet(int id, Pet updatedDetails) {
         Pet foundPet = getPetById(id);
+        foundPet = (Dog) getPetById(id);
 
         if (foundPet != null) {
             foundPet.setOwner(updatedDetails.getOwner());
@@ -91,17 +92,17 @@ public class DayCare implements ISerializer {
             foundPet.setDaysAttending(updatedDetails.getDaysAttending());
             foundPet.setId(updatedDetails.getId());
             foundPet.setName(updatedDetails.getName());
-            if (updatedDetails instanceof Dog dogUpdatedDetails) {
-                foundPet = updateDog(id,dogUpdatedDetails); //casting updated details to Dog
+            if (foundPet instanceof Dog) {
+                updateDog(id,(Dog) updatedDetails); //casting updated details to Dog
             }
-            else if (updatedDetails instanceof Cat catUpdatedDetail) {
-                foundPet = updateCat(id,(Cat) catUpdatedDetail);
+            else if (foundPet instanceof Cat) {
+                updateCat(id,(Cat) updatedDetails);
             }
         }
         return foundPet;
     }
 
-    public Pet updateDog(int id, Dog updatedDetails) {
+    public Dog updateDog(int id, Dog updatedDetails) {
         //find the dog object by the index number.
         Dog foundDog = (Dog) getPetById(id);
 
@@ -149,8 +150,8 @@ public class DayCare implements ISerializer {
             return "No Pets";
         } else {
             String str = "";
-            for (Pet pet : pets) {
-                str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            for (Pet p : pets) {
+                str += pets.indexOf(p) + ": " + p.toString() + "\n";
             }
             return str;
         }
@@ -167,9 +168,9 @@ public class DayCare implements ISerializer {
             return "No Pets";
         } else {
             String str = "";
-            for (Pet pet : pets) {
-                if (pet instanceof Cat) {
-                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            for (Pet p : pets) {
+                if (p instanceof Cat) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
             if (str.isEmpty()) {
@@ -191,9 +192,9 @@ public class DayCare implements ISerializer {
             return "No Pets";
         } else {
             String str = "";
-            for (Pet pet : pets) {
-                if (pet instanceof Dog) {
-                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            for (Pet p : pets) {
+                if (p instanceof Dog) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
             if (str.isEmpty()) {
@@ -218,16 +219,112 @@ public class DayCare implements ISerializer {
         } else {
             String str = "";
             boolean hasDogs = false; //check if any dogs exist at all
-            for (Pet pet : pets) {
-                if (pet instanceof Dog dog && (dog.isDangerousBreed())) { //check if the pet is a Dog first, then access its properties
+            for (Pet p : pets) {
+                if (p instanceof Dog dog && (dog.isDangerousBreed())) { //check if the pet is a Dog first, then access its properties
                     hasDogs = true;
-                        str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
             if (!hasDogs) {
                 return "No Dogs";
             } else if (str.isEmpty()) {
                 return "No Dangerous Dogs in the Kennels";
+            } else {
+                return str;
+            }
+        }
+    }
+
+    /**
+     * listAllIndoorCats method
+     *
+     * @return a String containing the details of all the cats in pets along with the index number associated with each Cat object.
+     * If no cats exist yet, “No cats” should be returned.
+     */
+    public String listAllIndoorCats() {
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            for (Pet p : pets) {
+                if (p instanceof Cat cat && (cat.isIndoorCat())) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No Cats";
+            } else {
+                return str;
+            }
+        }
+    }
+
+    /**
+     * listAllDogsOlderThan method
+     *
+     * @return a String containing the details of all the dogs in pets along with the index number associated with each Dog object.
+     * If no dogs exist yet, “No Dogs” should be returned.
+     */
+    public String listAllDogsOlderThan(int age) {
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            for (Pet p : pets) {
+                if (p instanceof Dog dog && dog.getAge() > age) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No Dogs";
+            } else {
+                return str;
+            }
+        }
+    }
+
+    /**
+     * listAllCatsByFavToy method
+     *
+     * @return a String containing the details of all the cats in pets along with the index number associated with each Cat object.
+     * If no cats exist yet, “No cats” should be returned.
+     */
+    public String listAllCatsByFavToy(String toy) {
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            for (Pet p : pets) {
+                if (p instanceof Cat cat && cat.getFavouriteToy().equals(toy)) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No cat's favourite toy";
+            } else {
+                return str;
+            }
+        }
+    }
+
+    /**
+     * listAllNeuteredPets method
+     *
+     * @return a String containing the details of all the pets in 'pets' along with the index number associated with each Pet object.
+     * If no pets exist yet, "No Pets" should be returned.
+     */
+    public String listAllNeuteredPets() {
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            for (Pet p : pets) {
+                if (p.isNeutered()) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No Pets are neutered";
             } else {
                 return str;
             }
@@ -247,9 +344,9 @@ public class DayCare implements ISerializer {
             return "No Pets";
         } else {
             String str = "";
-            for (Pet pet : pets) {
-                if (pet.getOwner().equals(name)) {
-                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            for (Pet p : pets) {
+                if (p.getOwner().equals(name)) {
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
             if (str.isEmpty()) {
@@ -272,9 +369,9 @@ public class DayCare implements ISerializer {
             return "No Pets";
         } else {
             String str = "";
-            for (Pet pet : pets) {
-                if(pet.numberOfDaysInKennel() > numDays){
-                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+            for (Pet p : pets) {
+                if(p.numberOfDaysInKennel() > numDays){
+                    str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
             return str;
@@ -293,8 +390,8 @@ public class DayCare implements ISerializer {
 
     public int numberOfCats() {
         int number = 0;
-        for (Pet pet : pets) {
-            if (pet instanceof Cat) {
+        for (Pet p : pets) {
+            if (p instanceof Cat) {
                 number++;
             }
         }
@@ -303,8 +400,8 @@ public class DayCare implements ISerializer {
 
     public int numberOfDogs() {
         int number = 0;
-        for (Pet pet : pets) {
-            if (pet instanceof Dog) {
+        for (Pet p : pets) {
+            if (p instanceof Dog) {
                 number++;
             }
         }
@@ -314,8 +411,8 @@ public class DayCare implements ISerializer {
     public int numberOfDangerousDogs() {
         int number = 0;
 
-        for (Pet pet : pets) {
-            if (pet instanceof Dog dog && (dog.isDangerousBreed())) {
+        for (Pet p : pets) {
+            if (p instanceof Dog dog && (dog.isDangerousBreed())) {
                 number++;
             }
         }
@@ -424,27 +521,25 @@ public class DayCare implements ISerializer {
 
     public double getWeeklyIncome() {
         double total = 0;
-        for( Pet pet : pets){
-            total += pet.calculateWeeklyFee();
+        for( Pet p : pets){
+            total += p.calculateWeeklyFee();
         }
         return total;
     }
 
     public double getAverageNumDaysPerWeek() {
         double total = 0;
-        for( Pet pet : pets){
-            total += pet.numberOfDaysInKennel();
+        for( Pet p : pets){
+            total += p.numberOfDaysInKennel();
         }
         return total/numberOfPets();
     }
 
     public Pet findDogByOwnerAndBreedAndAge(String name, String breed, int age) {
         for (Pet p : pets) {
-            if(p instanceof Dog dog){
-                if (dog.getName().equals(name) && dog.getBreed().equals(breed) && dog.getAge() == age) {
+            if(p instanceof Dog dog && dog.getName().equals(name) && dog.getBreed().equals(breed) && dog.getAge() == age) {
                   return p;
               }
-            }
         }
         return null;
     }

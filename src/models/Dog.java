@@ -12,13 +12,11 @@ public class Dog extends Pet {
     private boolean dangerousBreed = false;
     private static float DANGEROUS_DAILY_RATE = 40;
     private static float NONDANGEROUS_DAILY_RATE = 30;
-    private boolean neutered = false;
 
-    public Dog(String name, int age, char sex, String owner, int id, String breed, boolean dangerousBreed, boolean neutered) {
-        super(owner, age, sex, id, name);
+    public Dog(String name, int age, char sex, String owner, boolean neutered, int id, String breed, boolean dangerousBreed) {
+        super(owner, age, sex, id, name, neutered);
         this.breed = breed;
         this.dangerousBreed = dangerousBreed;
-        this.neutered = neutered;
     }
 
     public String getBreed() {
@@ -37,14 +35,7 @@ public class Dog extends Pet {
         this.dangerousBreed = dangerousBreed;
     }
 
-    public boolean isNeutered() {
-        return neutered;
-    }
-
-    public void setNeutered(boolean neutered) {
-        this.neutered = neutered;
-    }
-
+    @Override
     public double calculateWeeklyFee() {
         // gets daily rate for dog depending on whether dangerous or not
         //multiply rate by number of days in kennel and returns answer
@@ -59,7 +50,7 @@ public class Dog extends Pet {
     public final boolean equals(Object o) {
         if (!(o instanceof Dog dog)) return false;
 
-        return dangerousBreed == dog.dangerousBreed && neutered == dog.neutered && Objects.equals(breed, dog.breed);
+        return dangerousBreed == dog.dangerousBreed && Objects.equals(breed, dog.breed);
     }
 
     @Override
@@ -67,7 +58,6 @@ public class Dog extends Pet {
         return "Dog{" +
                 "breed='" + breed + '\'' +
                 ", dangerousBreed=" + dangerousBreed +
-                ", neutered=" + neutered +
                 "} " + super.toString();
     }
 }

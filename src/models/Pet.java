@@ -14,13 +14,15 @@ public class Pet {
     private boolean[] daysAttending = new boolean[5];
     private int id = 1000;
     private String name = ""; //truncates to 30 chars
+    private boolean neutered = false;
 
-    public Pet(String owner, int age, char sex, int id, String name) {
+    public Pet(String owner, int age, char sex, int id, String name, boolean neutered) {
         this.owner = owner;
         this.age = age;
         this.sex = sex;
         this.id = id;
         this.name = name;
+        this.neutered = neutered;
     }
 
     public String getOwner() {
@@ -69,6 +71,14 @@ public class Pet {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isNeutered() {
+        return neutered;
+    }
+
+    public void setNeutered(boolean neutered) {
+        this.neutered = neutered;
     }
 
     public double calculateWeeklyFee() { return 0; }
