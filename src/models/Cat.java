@@ -31,6 +31,7 @@ public class Cat extends Pet {
         this.favouriteToy = favouriteToy;
     }
 
+    @Override
     public double calculateWeeklyFee() {
         // base rate is 20 per day,
         //an extra 5 is added if the cat is an indoor cat

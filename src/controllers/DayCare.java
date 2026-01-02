@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class DayCare implements ISerializer {
 
     private int maxNumberOfPets = 0;
-    private ArrayList<Pet> pets;
+    private List<Pet> pets;
     private String name = ""; //max 20 chars
 
     /**
@@ -40,8 +41,16 @@ public class DayCare implements ISerializer {
      */
     public DayCare(String name, int maxNumberOfPets) {
         this.name = name;
-        pets = new ArrayList<Pet>();
+        pets = new ArrayList<>();
         this.maxNumberOfPets = maxNumberOfPets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
     }
 
     public String getName() {
@@ -50,14 +59,6 @@ public class DayCare implements ISerializer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ArrayList<Pet> getPetsArray() {
-        return pets;
-    }
-
-    public void setPetsArray(ArrayList<Pet> pets) {
-        this.pets = pets;
     }
 
     public int getMaxNumberOfPets() {

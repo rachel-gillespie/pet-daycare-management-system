@@ -6,7 +6,7 @@ import java.util.Arrays;
  * The responsibility for this abstract class is to be the super class for the projects.
  */
 
-public class Pet {
+public abstract class Pet {
 
     private String owner = ""; //truncates to 20 chars
     private int age = 0;
@@ -81,7 +81,7 @@ public class Pet {
         this.neutered = neutered;
     }
 
-    public double calculateWeeklyFee() { return 0; }
+    public abstract double calculateWeeklyFee();
 
     public void checkIn(int dayIndex) {
         // if valid dayIndex >=0 <= 5
@@ -112,7 +112,6 @@ public class Pet {
         return days;
     }
 
-    @Override
     public String toString() {
         return "Pet{" +
                 "owner='" + owner + '\'' +
