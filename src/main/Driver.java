@@ -41,13 +41,10 @@ public class Driver {
                 ------------------------------------------------------------------
                 |   1) Pets CRUD Menu                                            |
                 |   2) Reports Menu                                              |
-                3) Search & Sort Menu  
+                |   3) Search & Sort Menu                                        |
                 ------------------------------------------------------------------
-                |                                         |
-                |   4) Sort Pets                                                 |
-                ------------------------------------------------------------------
-                |   5) Save pets to pets.xml                                     |
-                |   6) Load pets from pets.xml                                   |
+                |   4) Save pets to pets.xml                                     |
+                |   5) Load pets from pets.xml                                   |
                 ------------------------------------------------------------------
                 |   0)  Exit                                                     |
                 ------------------------------------------------------------------
@@ -126,24 +123,74 @@ public class Driver {
 
         switch (option) {
             case 1 -> showPets();
-            case 2 -> daycare.listAllDogs();
-            case 3 -> daycare.listAllCats();
-            case 4 -> daycare.listAllDangerousDogs();
-            case 5 -> daycare.listAllIndoorCats();
-            case 6 -> {
-                int age = ScannerInput.readNextInt("Enter an age: ");
-                daycare.listAllDogsOlderThan(age);
-            }
-            case 7 -> {
-                String toy = ScannerInput.readNextLine("Enter a toy: ");
-                daycare.listAllCatsByFavToy(toy);
-            }
-            case 8 -> daycare.listAllNeuteredPets();
-            case 9 -> daycare.getWeeklyIncome();
+            case 2 -> showDogs();
+            case 3 -> showCats();
+            case 4 -> showDangerousDogs();
+            case 5 -> showIndoorCats();
+            case 6 -> showAllDogsOlderThan();
+            case 7 -> showCatsByFavToy();
+            case 8 -> showPetsNeutered();
+            case 9 -> showWeeklyIncome();
             case 0 -> runMenu();
             default -> System.out.println("Invalid option entered: " + option);
         }
 
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showPets() {
+        System.out.println("List of all Pets are: ");
+        System.out.println(daycare.listAllPets());
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showDogs() {
+        System.out.println("List of all Dogs are: ");
+        System.out.println(daycare.listAllDogs());
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showCats() {
+        System.out.println("List of all Cats are: ");
+        System.out.println(daycare.listAllCats());
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showDangerousDogs() {
+        System.out.println("List of all Dangerous Dogs are: ");
+        System.out.println(daycare.listAllDangerousDogs());
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showIndoorCats() {
+        System.out.println("List of all Indoor Cats are: ");
+        System.out.println(daycare.listAllIndoorCats());
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showAllDogsOlderThan() {
+        int age = ScannerInput.readNextInt("Enter an age: ");
+        System.out.println("List of all Dogs Older than" + age + " are: ");
+        System.out.println(daycare.listAllDogsOlderThan(age));
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showCatsByFavToy() {
+        String toy = ScannerInput.readNextLine("Enter a toy: ");
+        System.out.println("List of all Pets by Favourite Toy: ");
+        System.out.println(daycare.listAllCatsByFavToy(toy));
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showPetsNeutered() {
+        System.out.println("List of all Pets that are neutered: ");
+        System.out.println(daycare.listAllNeuteredPets());
+    }
+
+    //print all the pets in daycare i.e. array list.
+    private void showWeeklyIncome() {
+        System.out.println("Weekly Income: ");
+        System.out.println(daycare.getWeeklyIncome());
     }
 
     private void addPetMenu() {
@@ -222,16 +269,6 @@ public class Driver {
         }
     }
 
-    //print all the pets in daycare i.e. array list.
-    private void showPets() {
-        System.out.println("List of all Pets are:");
-        System.out.println(daycare.listAllPets());
-    }
-
-    //------------------------------------------------------------------------------------------
-    //  Option 2 - Update Posts - if posts exist, the user is asked if it is a message or a photo post
-    //             and the required details are then gathered before adding the specific object
-    //------------------------------------------------------------------------------------------
     private void updatePetMenu() {
 
         if (daycare.numberOfPets() > 0) {
@@ -387,16 +424,30 @@ public class Driver {
 //TODO - write all the methods that are called from your menu
 
     //------------------------------------
-    // SEARCHING AND SORTING METHODS
+    //    SEARCHING AND SORTING METHODS
     // ------------------------------------
-    private void searchPetsByName() {
-        String productName = ScannerInput.readNextLine("Please enter a pet name to search by:");
-        System.out.println(daycare.searchByProductName(productName));
+    private void searchAndSortMenu() {
+        int option = ScannerInput.readNextInt("""
+                -------------------------------------
+                |         SEARCH & SORT MENU        |
+                -------------------------------------
+                |   1) Search Pets by Name          |
+                |   1) Sort Pets by Name            |
+                -------------------------------------
+                |   0) Return to Main Menu          |
+                -------------------------------------
+                ==>>""");
+
+        switch (option) {
+            case 0 -> runMenu();
+            case 1 -> searchPetsByName();
+            default -> System.out.println("Invalid option entered: " + option);
+        }
     }
 
-    private void sortPetsByName() {
-        store.sortProductsByUnitCostAscending();
-        System.out.println(store.listProducts());
+    private void searchPetsByName() {
+        String petName = ScannerInput.readNextLine("Please enter a pet name to search by:");
+        System.out.println(daycare.searchByName(petName));
     }
 
     //------------------------------------
@@ -429,20 +480,16 @@ public class Driver {
     //  Helper Methods
     //---------------------
 
-    private Pet askUserToSelectPet() {
-        printProducts();
-        if (store.numberOfProducts() > 0) {
-            Product product = store.findProduct(ScannerInput.readNextInt("Enter the index of the product: "));
-            if (product != null) {
-                return product;
-            } else {
-                System.out.println("Product index is not valid");
-            }
-        }
-        return null;
-    }
-}
-
-//TODO- write any helper methods that are required
-
+//    private Pet askUserToSelectPet() {
+//        printProducts();
+//        if (store.numberOfProducts() > 0) {
+//            Product product = store.findProduct(ScannerInput.readNextInt("Enter the index of the product: "));
+//            if (product != null) {
+//                return product;
+//            } else {
+//                System.out.println("Product index is not valid");
+//            }
+//        }
+//        return null;
+//    }
 }

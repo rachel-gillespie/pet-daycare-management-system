@@ -8,20 +8,26 @@ import java.util.Objects;
 
 public class Dog extends Pet {
 
-    // FIELDS
+    //------------------------------------
+    //              FIELDS
+    //------------------------------------
     private String breed = ""; //20 chars
     private boolean dangerousBreed = false;
     private static float DANGEROUS_DAILY_RATE = 40;
     private static float NONDANGEROUS_DAILY_RATE = 30;
 
-    // CONSTRUCTOR
+    //------------------------------------
+    //            CONSTRUCTOR
+    //------------------------------------
     public Dog(String name, int age, char sex, String owner, boolean neutered, int id, String breed, boolean dangerousBreed) {
         super(owner, age, sex, id, name, neutered);
         this.breed = breed;
         this.dangerousBreed = dangerousBreed;
     }
 
-    // GETTERS
+    //------------------------------------
+    //              GETTERS
+    //------------------------------------
     public String getBreed() {
         return breed;
     }
@@ -30,7 +36,9 @@ public class Dog extends Pet {
         return dangerousBreed;
     }
 
-    // SETTERS
+    //------------------------------------
+    //              SETTERS
+    //------------------------------------
     public void setBreed(String breed) {
         this.breed = breed;
     }

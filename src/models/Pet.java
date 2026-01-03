@@ -10,7 +10,9 @@ import java.util.Arrays;
 
 public abstract class Pet {
 
-    // FIELDS
+    //------------------------------------
+    //              FIELDS
+    //------------------------------------
     private String owner = ""; //truncates to 20 chars
     private int age = 0;
     private char sex = 'f';
@@ -19,7 +21,9 @@ public abstract class Pet {
     private String name = ""; //truncates to 30 chars
     private boolean neutered = false;
 
-    // CONSTRUCTOR
+    //------------------------------------
+    //            CONSTRUCTOR
+    //------------------------------------
     public Pet(String owner, int age, char sex, int id, String name, boolean neutered) {
         this.owner = owner;
         this.age = age;
@@ -29,7 +33,9 @@ public abstract class Pet {
         this.neutered = neutered;
     }
 
-    // GETTERS
+    //------------------------------------
+    //              GETTERS
+    //------------------------------------
     public String getOwner() {
         return owner;
     }
@@ -58,7 +64,9 @@ public abstract class Pet {
         return neutered;
     }
 
-    // SETTERS
+    //------------------------------------
+    //              SETTERS
+    //------------------------------------
     public void setOwner(String owner) {
         this.owner = Utilities.truncateString(owner, 20);
     }
@@ -108,7 +116,7 @@ public abstract class Pet {
     public int numberOfDaysInKennel() {
         // iterates through array
         int days = 0;
-        for (int i = 0; i <= daysAttending.length; i++) {
+        for (int i = 0; i < daysAttending.length; i++) {
             //  Adds 1 to a variable if the element of the array is true
             if (daysAttending[i]) {
                 days++;

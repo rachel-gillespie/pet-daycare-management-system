@@ -9,18 +9,24 @@ import utils.Utilities;
 
 public class Cat extends Pet {
 
-    // FIELDS
+    //------------------------------------
+    //              FIELDS
+    //------------------------------------
     private boolean indoorCat = true;
     private String favouriteToy = "not known";
 
-    // CONSTRUCTOR
+    //------------------------------------
+    //            CONSTRUCTOR
+    //------------------------------------
     public Cat(String owner, int age, char sex, int id, String name, boolean neutered, boolean indoorCat, String favouriteToy) {
         super(owner, age, sex, id, name, neutered);
         this.indoorCat = indoorCat;
         this.favouriteToy = favouriteToy;
     }
 
-    // GETTERS
+    //------------------------------------
+    //              GETTERS
+    //------------------------------------
     public boolean isIndoorCat() {
         return indoorCat;
     }
@@ -29,7 +35,9 @@ public class Cat extends Pet {
         return favouriteToy;
     }
 
-    // SETTERS
+    //------------------------------------
+    //              SETTERS
+    //------------------------------------
     public void setIndoorCat(boolean indoorCat) {
         this.indoorCat = indoorCat;
     }

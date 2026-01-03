@@ -1,0 +1,72 @@
+<object-stream>
+  <list>
+    <models.Dog>
+      <owner>Sarah Johnson</owner>
+      <age>3</age>
+      <sex>f</sex>
+      <daysAttending>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+      </daysAttending>
+      <id>101</id>
+      <name>Bella</name>
+      <neutered>true</neutered>
+      <breed>Golden Retriever</breed>
+      <dangerousBreed>false</dangerousBreed>
+    </models.Dog>
+    <models.Cat>
+      <owner>Michael Chen</owner>
+      <age>2</age>
+      <sex>m</sex>
+      <daysAttending>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+      </daysAttending>
+      <id>102</id>
+      <name>Whiskers</name>
+      <neutered>true</neutered>
+      <indoorCat>true</indoorCat>
+      <favouriteToy>feather wand</favouriteToy>
+    </models.Cat>
+    <models.Dog>
+      <owner>James Rodriguez</owner>
+      <age>5</age>
+      <sex>m</sex>
+      <daysAttending>
+        <boolean>true</boolean>
+        <boolean>true</boolean>
+        <boolean>true</boolean>
+        <boolean>true</boolean>
+        <boolean>true</boolean>
+      </daysAttending>
+      <id>103</id>
+      <name>Max</name>
+      <neutered>true</neutered>
+      <breed>German Shepherd</breed>
+      <dangerousBreed>false</dangerousBreed>
+    </models.Dog>
+    <models.Cat>
+      <owner>Emily Parker</owner>
+      <age>4</age>
+      <sex>f</sex>
+      <daysAttending>
+        <boolean>true</boolean>
+        <boolean>false</boolean>
+        <boolean>true</boolean>
+        <boolean>false</boolean>
+        <boolean>true</boolean>
+      </daysAttending>
+      <id>104</id>
+      <name>Luna</name>
+      <neutered>false</neutered>
+      <indoorCat>false</indoorCat>
+      <favouriteToy>catnip mouse</favouriteToy>
+    </models.Cat>
+  </list>
+</object-stream>

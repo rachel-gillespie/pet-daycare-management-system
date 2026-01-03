@@ -16,7 +16,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * DayCare
  * This DayCare class is responsible for storing and managing ALL the Pets in the system.
@@ -27,10 +26,16 @@ import java.util.List;
 
 public class DayCare implements ISerializer {
 
-    // FIELDS
+    //------------------------------------
+    //              FIELDS
+    //------------------------------------
     private List<Pet> pets;
     private String name = ""; //max 20 chars
     private int maxNumberOfPets = 0;
+
+    //------------------------------------
+    //            CONSTRUCTOR
+    //------------------------------------
 
     /**
      * Constructor for objects of class DayCare.
@@ -45,7 +50,9 @@ public class DayCare implements ISerializer {
         this.maxNumberOfPets = maxNumberOfPets;
     }
 
-    // GETTERS
+    //------------------------------------
+    //              GETTERS
+    //------------------------------------
 
     /**
      * Returns the name of the day care.
@@ -74,7 +81,9 @@ public class DayCare implements ISerializer {
         return maxNumberOfPets;
     }
 
-    // SETTERS
+    //------------------------------------
+    //              SETTERS
+    //------------------------------------
 
     /**
      * Sets the name of the day care.
@@ -103,7 +112,9 @@ public class DayCare implements ISerializer {
         this.maxNumberOfPets = maxNumberOfPets;
     }
 
-    // BASIC CRUD Methods
+    //------------------------------------
+    //        BASIC CRUD METHODS
+    //------------------------------------
 
     /**
      * Adds a Pet object to the day care's list of pets.
@@ -150,7 +161,7 @@ public class DayCare implements ISerializer {
      * @param name The name of the pet to find
      * @return The Pet object with the matching name, or null if not found
      */
-    public Pet getPet(String name) {
+    public Pet getPetName(String name) {
         for (Pet p : pets) {
             if (p.getName().equals(name)) {
                 return p;
@@ -187,12 +198,85 @@ public class DayCare implements ISerializer {
         return null;
     }
 
-//    public Pet removePet(int index) {
-//        Pet remove = pets.remove(index);
-//        return remove;
-//    }
+    //------------------------------------
+    //          UPDATE METHODS
+    //------------------------------------
 
-    //Reporting Methods
+    /**
+     * Updates an existing pet with new details.
+     *
+     * @param id             The ID of the pet to update
+     * @param updatedDetails A Pet object containing the new details
+     * @return true if the pet was successfully updated, false if the pet was not found
+     */
+    public boolean updatePet(int id, Pet updatedDetails) {
+        Pet foundPet = getPetById(id);
+
+        if (foundPet != null) {
+            foundPet.setOwner(updatedDetails.getOwner());
+            foundPet.setAge(updatedDetails.getAge());
+            foundPet.setSex(updatedDetails.getSex());
+            foundPet.setDaysAttending(updatedDetails.getDaysAttending());
+            foundPet.setId(updatedDetails.getId());
+            foundPet.setName(updatedDetails.getName());
+            if (foundPet instanceof Dog) {
+                updateDog(id, (Dog) updatedDetails); //casting updated details to Dog
+            } else if (foundPet instanceof Cat) {
+                updateCat(id, (Cat) updatedDetails);
+            }
+            return true;
+            //if the pet was not found, return false, indicating that the update was not successful.
+        } else return false;
+    }
+
+    /**
+     * Updates an existing dog with new dog-specific details.
+     *
+     * @param id             The ID of the dog to update
+     * @param updatedDetails A Dog object containing the new details
+     * @return true if the dog was successfully updated, false if the dog was not found
+     */
+    public boolean updateDog(int id, Dog updatedDetails) {
+        //find the dog object by the index number.
+        Dog foundDog = (Dog) getPetById(id);
+
+        //if the dog exists, use the details passed in the updateDetails parameter to
+        //update the found dog in the ArrayList.
+        if (foundDog != null) {
+            foundDog.setBreed(updatedDetails.getBreed());
+            foundDog.setDangerousBreed(updatedDetails.isDangerousBreed());
+            foundDog.setNeutered(updatedDetails.isNeutered());
+            return true;
+        }
+        //if the dog was not found, return false, indicating that the update was not successful.
+        return false;
+    }
+
+    /**
+     * Updates an existing cat with new cat-specific details.
+     *
+     * @param id             The ID of the cat to update
+     * @param updatedDetails A Cat object containing the new details
+     * @return true if the cat was successfully updated, false if the cat was not found
+     */
+    public boolean updateCat(int id, Cat updatedDetails) {
+        //find the cat object by the index number.
+        Cat foundCat = (Cat) getPetById(id);
+
+        //if the cat exists, use the details passed in the updateDetails parameter to
+        //update the found cat in the ArrayList.
+        if (foundCat != null) {
+            foundCat.setIndoorCat(updatedDetails.isIndoorCat());
+            foundCat.setFavouriteToy(updatedDetails.getFavouriteToy());
+            return true;
+        }
+        //if the cat was not found, return false, indicating that the update was not successful.
+        return false;
+    }
+
+    //------------------------------------
+    //         REPORTING METHODS
+    //------------------------------------
 
     /**
      * Generates a formatted list of all pets in the day care.
@@ -499,81 +583,9 @@ public class DayCare implements ISerializer {
         return number;
     }
 
-    // UPDATE METHODS
-
-    /**
-     * Updates an existing pet with new details.
-     *
-     * @param id             The ID of the pet to update
-     * @param updatedDetails A Pet object containing the new details
-     * @return true if the pet was successfully updated, false if the pet was not found
-     */
-    public boolean updatePet(int id, Pet updatedDetails) {
-        Pet foundPet = getPetById(id);
-
-        if (foundPet != null) {
-            foundPet.setOwner(updatedDetails.getOwner());
-            foundPet.setAge(updatedDetails.getAge());
-            foundPet.setSex(updatedDetails.getSex());
-            foundPet.setDaysAttending(updatedDetails.getDaysAttending());
-            foundPet.setId(updatedDetails.getId());
-            foundPet.setName(updatedDetails.getName());
-            if (foundPet instanceof Dog) {
-                updateDog(id, (Dog) updatedDetails); //casting updated details to Dog
-            } else if (foundPet instanceof Cat) {
-                updateCat(id, (Cat) updatedDetails);
-            }
-            return true;
-            //if the pet was not found, return false, indicating that the update was not successful.
-        } else return false;
-    }
-
-    /**
-     * Updates an existing dog with new dog-specific details.
-     *
-     * @param id             The ID of the dog to update
-     * @param updatedDetails A Dog object containing the new details
-     * @return true if the dog was successfully updated, false if the dog was not found
-     */
-    public boolean updateDog(int id, Dog updatedDetails) {
-        //find the dog object by the index number.
-        Dog foundDog = (Dog) getPetById(id);
-
-        //if the dog exists, use the details passed in the updateDetails parameter to
-        //update the found dog in the ArrayList.
-        if (foundDog != null) {
-            foundDog.setBreed(updatedDetails.getBreed());
-            foundDog.setDangerousBreed(updatedDetails.isDangerousBreed());
-            foundDog.setNeutered(updatedDetails.isNeutered());
-            return true;
-        }
-        //if the dog was not found, return false, indicating that the update was not successful.
-        return false;
-    }
-
-    /**
-     * Updates an existing cat with new cat-specific details.
-     *
-     * @param id             The ID of the cat to update
-     * @param updatedDetails A Cat object containing the new details
-     * @return true if the cat was successfully updated, false if the cat was not found
-     */
-    public boolean updateCat(int id, Cat updatedDetails) {
-        //find the cat object by the index number.
-        Cat foundCat = (Cat) getPetById(id);
-
-        //if the cat exists, use the details passed in the updateDetails parameter to
-        //update the found cat in the ArrayList.
-        if (foundCat != null) {
-            foundCat.setIndoorCat(updatedDetails.isIndoorCat());
-            foundCat.setFavouriteToy(updatedDetails.getFavouriteToy());
-            return true;
-        }
-        //if the cat was not found, return false, indicating that the update was not successful.
-        return false;
-    }
-
-    //VALIDATION METHODS
+    //------------------------------------
+    //         VALIDATION METHODS
+    //------------------------------------
 
     /**
      * Checks if the specified ID is available (not already in use).
@@ -590,7 +602,9 @@ public class DayCare implements ISerializer {
         return true;
     }
 
-    // OTHER METHODS
+    //------------------------------------
+    //           OTHER METHODS
+    //------------------------------------
 
     /**
      * Calculates the total weekly income from all pets in the day care.
@@ -635,25 +649,58 @@ public class DayCare implements ISerializer {
         return null;
     }
 
-//    public String getPetsByOwnersName(String name) {
-//        if (pets.isEmpty()) {
-//            return "No Pets";
-//        } else {
-//            String str = "";
-//            for (Pet pet : pets) {
-//                if (pet.getOwner().equals(name)) {
-//                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
-//                }
-//            }
-//            if (str.isEmpty()) {
-//                return "No Pet with owner" + name;
-//            } else {
-//                return str;
-//            }
-//        }
-//    }
+    /**
+     * Generates a formatted list of all pets belonging to a specific owner.
+     *
+     * @param name The name of the owner to search for
+     * @return A string containing all pets belonging to that owner with their index numbers,
+     * "No Pets" if the pet list is empty, or "No Pet with owner [owner name]" if no matches exist
+     */
+    public String getPetsByOwnersName(String name) {
+        if (pets.isEmpty()) {
+            return "No Pets";
+        } else {
+            String str = "";
+            for (Pet pet : pets) {
+                if (pet.getOwner().equals(name)) {
+                    str += pets.indexOf(pet) + ": " + pet.toString() + "\n";
+                }
+            }
+            if (str.isEmpty()) {
+                return "No Pet with owner" + name;
+            } else {
+                return str;
+            }
+        }
+    }
 
-    // PERSISTENCE METHODS
+    //------------------------------------
+    //     SEARCHING & SORTING METHODS
+    //------------------------------------
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public String searchByName(String name) {
+        String matchingPets = "";
+        for (Pet p : pets) {
+            if (p.getName().toUpperCase().contains(name.toUpperCase())) {
+                matchingPets += pets.indexOf(p) + ": " + p + "\n";
+            }
+        }
+
+        if (matchingPets.equals("")) {
+            return "No pets match your search";
+        } else {
+            return matchingPets;
+        }
+    }
+
+    //------------------------------------
+    //        PERSISTENCE METHODS
+    //------------------------------------
 
     /**
      * Loads all Pet objects from the XML file into the system.
@@ -662,18 +709,15 @@ public class DayCare implements ISerializer {
      */
     @SuppressWarnings("unchecked")
     public void load() throws Exception {
-        //list of classes that you wish to include in the serialisation, separated by a comma
-        Class<?>[] classes = new Class[]{Pet.class};
+        Class<?>[] classes = new Class[]{Pet.class, Dog.class, Cat.class}; // Provide a list of classes that you want to serialize
 
-        //setting up the xstream object with default security and the above classes
-        XStream xstream = new XStream(new DomDriver());
-        XStream.setupDefaultSecurity(xstream);
-        xstream.allowTypes(classes);
+        XStream xstream = new XStream(new DomDriver()); // Initialize an
+        XStream.setupDefaultSecurity(xstream);          // XStream object and
+        xstream.allowTypes(classes);                    // set up security rules
 
-        //doing the actual serialisation to an XML file
-        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("pets.xml"));
-        pets = (ArrayList<Pet>) is.readObject();
-        is.close();
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("pets.xml")); // Use XStream object to initialize an ObjectInputStream from a specific file
+        pets = (ArrayList<Pet>) is.readObject(); // Call the is.readObject() method to assign values to the object e.g. pets
+        is.close(); // Close the stream/file
     }
 
     /**
@@ -682,13 +726,15 @@ public class DayCare implements ISerializer {
      * @throws Exception if there is an error writing to the file
      */
     public void save() throws Exception {
-        XStream xstream = new XStream(new DomDriver());
-        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("pets.xml"));
-        out.writeObject(pets);
-        out.close();
+        XStream xstream = new XStream(new DomDriver()); // Initialize an XStream object variable
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("pets.xml")); // Use it to initialize an ObjectOutputStream to a specific file
+        out.writeObject(pets); // Write out the objects you want saved e.g. pets
+        out.close(); // Close the stream/file
     }
 
-    // ISERIALIZER
+    //------------------------------------
+    //              ISERIALIZER
+    //------------------------------------
 
     /**
      * Returns the name of the file used for saving and loading pet data.
