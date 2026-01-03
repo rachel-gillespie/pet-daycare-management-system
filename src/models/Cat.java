@@ -1,30 +1,37 @@
 package models;
 
+import utils.CatToyUtility;
+import utils.Utilities;
+
 /**
  * The responsibility for this concrete class is to extend Pet and implement the class for a Cat.
  */
 
 public class Cat extends Pet {
 
+    // FIELDS
     private boolean indoorCat = true;
     private String favouriteToy = "not known";
 
+    // CONSTRUCTOR
     public Cat(String owner, int age, char sex, int id, String name, boolean neutered, boolean indoorCat, String favouriteToy) {
         super(owner, age, sex, id, name, neutered);
         this.indoorCat = indoorCat;
         this.favouriteToy = favouriteToy;
     }
 
+    // GETTERS
     public boolean isIndoorCat() {
         return indoorCat;
     }
 
-    public void setIndoorCat(boolean indoorCat) {
-        this.indoorCat = indoorCat;
-    }
-
     public String getFavouriteToy() {
         return favouriteToy;
+    }
+
+    // SETTERS
+    public void setIndoorCat(boolean indoorCat) {
+        this.indoorCat = indoorCat;
     }
 
     public void setFavouriteToy(String favouriteToy) {
@@ -44,10 +51,7 @@ public class Cat extends Pet {
 
     @Override
     public String toString() {
-        return "Cat{" +
-                "indoorCat=" + indoorCat +
-                ", favouriteToy='" + favouriteToy + '\'' +
-                "} " + super.toString();
+        return "Cat{" + "indoorCat=" + indoorCat + ", favouriteToy='" + favouriteToy + '\'' + "} " + super.toString();
     }
 }
 

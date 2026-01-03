@@ -10,9 +10,8 @@ import java.util.Set;
 public class DogBreedUtility {
 
     private static  Set<String> dogBreeds = new HashSet<>();
+
     public static boolean checkBreed(String breed) {
-
-
         // Add breeds
         dogBreeds.add("LABRADOR RETRIEVER");
         dogBreeds.add("GERMAN SHEPHERD");
@@ -22,7 +21,7 @@ public class DogBreedUtility {
         dogBreeds.add("ROTTWEILER");
         dogBreeds.add("PIT BULL");
 
-        return dogBreeds.contains(breed.toLowerCase());
+        return dogBreeds.contains(breed.toUpperCase());
     }
 
 }

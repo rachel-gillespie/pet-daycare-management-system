@@ -1,5 +1,7 @@
 package models;
 
+import utils.Utilities;
+
 import java.util.Arrays;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Arrays;
 
 public abstract class Pet {
 
+    // FIELDS
     private String owner = ""; //truncates to 20 chars
     private int age = 0;
     private char sex = 'f';
@@ -16,6 +19,7 @@ public abstract class Pet {
     private String name = ""; //truncates to 30 chars
     private boolean neutered = false;
 
+    // CONSTRUCTOR
     public Pet(String owner, int age, char sex, int id, String name, boolean neutered) {
         this.owner = owner;
         this.age = age;
@@ -25,56 +29,58 @@ public abstract class Pet {
         this.neutered = neutered;
     }
 
+    // GETTERS
     public String getOwner() {
         return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public char getSex() {
         return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
     }
 
     public boolean[] getDaysAttending() {
         return daysAttending;
     }
 
-    public void setDaysAttending(boolean[] daysAttending) {
-        this.daysAttending = daysAttending;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isNeutered() {
         return neutered;
+    }
+
+    // SETTERS
+    public void setOwner(String owner) {
+        this.owner = Utilities.truncateString(owner, 20);
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setSex(char sex) {
+        this.sex = sex;
+    }
+
+    public void setDaysAttending(boolean[] daysAttending) {
+        this.daysAttending = daysAttending;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = Utilities.truncateString(name, 30);
     }
 
     public void setNeutered(boolean neutered) {
@@ -113,13 +119,6 @@ public abstract class Pet {
     }
 
     public String toString() {
-        return "Pet{" +
-                "owner='" + owner + '\'' +
-                ", age=" + age +
-                ", sex=" + sex +
-                ", daysAttending=" + Arrays.toString(daysAttending) +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Pet{" + "owner='" + owner + '\'' + ", age=" + age + ", sex=" + sex + ", daysAttending=" + Arrays.toString(daysAttending) + ", id=" + id + ", name='" + name + '\'' + '}';
     }
 }

@@ -22,33 +22,28 @@ public class Driver {
     private static DayCare daycare;
 
     public static void main(String[] args) {
-        daycare = new DayCare("peepeepoopoo", 20);
+        daycare = new DayCare("", 0);
         new Driver();
-
     }
 
     public Driver() {
-
-        //TODO - load all data
-
         runMenu();
     }
+
     //----------------------------------------------------------------------------
     // Private methods for displaying the menu and processing the selected options
     //----------------------------------------------------------------------------
 
     private int mainMenu() {
-
-        //TODO write menu that user will see
-
         int option = ScannerInput.readNextInt("""
                 ------------------------------------------------------------------
                 |                        Pet Day Care                            |
                 ------------------------------------------------------------------
                 |   1) Pets CRUD Menu                                            |
                 |   2) Reports Menu                                              |
+                3) Search & Sort Menu  
                 ------------------------------------------------------------------
-                |   3) Search Pets                                               |
+                |                                         |
                 |   4) Sort Pets                                                 |
                 ------------------------------------------------------------------
                 |   5) Save pets to pets.xml                                     |
@@ -64,13 +59,13 @@ public class Driver {
         int option = mainMenu();
 
         while (option != 0) {
+
             switch (option) {
                 case 1 -> crudMenu();
                 case 2 -> reportsMenu();
-                case 3 -> searchPets();
-                case 4 -> sortPets();
-                case 5 -> savePets();
-                case 6 -> loadPets();
+                case 3 -> searchAndSortMenu();
+                case 4 -> savePets();
+                case 5 -> loadPets();
                 default -> System.out.println("Invalid option entered: " + option);
             }
             //pause the program so that the user can read what we just printed to the terminal window
@@ -79,7 +74,6 @@ public class Driver {
             //display the main menu again
             option = mainMenu();
         }
-        //TODO - write code to call appropriate method based on value in option
 
         //the user chose option 0, so exit the program
         System.out.println("Exiting...bye");
@@ -101,7 +95,6 @@ public class Driver {
                 -------------------------------------
                 ==>>""");
 
-
         switch (option) {
             case 0 -> runMenu();
             case 1 -> addPetMenu();
@@ -110,7 +103,6 @@ public class Driver {
             case 4 -> deletePetMenu();
             default -> System.out.println("Invalid option entered: " + option);
         }
-
     }
 
     private void reportsMenu() {
@@ -192,7 +184,6 @@ public class Driver {
 
         switch (option) {
             case 1 -> {
-
                 String breed = ScannerInput.readNextLine("What breed is your dog?: ");
                 while (!DogBreedUtility.checkBreed(breed)) {
                     breed = ScannerInput.readNextLine("Invalid breed, What breed is your dog?: ");
@@ -205,7 +196,6 @@ public class Driver {
 
                 Dog dog = new Dog(name, age, sex, owner, neutered, id, breed, dangerousBreed);
                 isAdded = daycare.addPet(dog);
-
             }
             case 2 -> {
                 char indoorCatInput = ScannerInput.readNextChar("Is the cat an indoor cat? (y/n): ");
@@ -213,6 +203,7 @@ public class Driver {
                     indoorCatInput = ScannerInput.readNextChar("Invalid option " + indoorCatInput + ", Is the cat an indoor cat? (y/n): ");
                 }
                 boolean indoorCat = Utilities.YNtoBoolean(indoorCatInput);
+                System.out.println(CatToyUtility.getCatToys());
                 String favouriteToy = ScannerInput.readNextLine("What is the cat's favourite toy?: ");
                 while (!CatToyUtility.isCatToy(favouriteToy)) {
                     favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
@@ -260,6 +251,11 @@ public class Driver {
             showPets();
             if (daycare.numberOfPets() > 0) {
                 int idToUpdate = ScannerInput.readNextInt("Enter the id of the pet to update ==> ");
+                System.out.println(idToUpdate);
+                char ans = ScannerInput.readNextChar("Is this Id correct? (y/n): ");
+                if (ans == 'n') {
+                    ScannerInput.readNextInt("Enter the correct id of the pet to update ==> ");
+                } else {
                     String owner = ScannerInput.readNextLine("Enter Owner's Name: ");
                     int age = ScannerInput.readNextInt("Enter Pet's age: ");
                     char sex = ScannerInput.readNextChar("Enter Pet's sex (m/f): ");
@@ -296,7 +292,7 @@ public class Driver {
                             boolean dangerousBreed = Utilities.YNtoBoolean(dangerousBreedInput);
 
                             Dog dog = new Dog(name, age, sex, owner, neutered, id, breed, dangerousBreed);
-                            isUpdated = daycare.updatePet(idToUpdate, name, age, sex, owner, neutered, id, breed, dangerousBreed);
+                            isUpdated = daycare.updatePet(idToUpdate, dog);
 
                         }
                         case 2 -> {
@@ -306,25 +302,27 @@ public class Driver {
                             }
                             boolean indoorCat = Utilities.YNtoBoolean(indoorCatInput);
                             String favouriteToy = ScannerInput.readNextLine("What is the cat's favourite toy?: ");
+                            CatToyUtility.getCatToys();
                             while (!CatToyUtility.isCatToy(favouriteToy)) {
                                 favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
                             }
 
                             Cat cat = new Cat(owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
-                            isUpdated = daycare.updatePet(idToUpdate, owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
+                            isUpdated = daycare.updatePet(idToUpdate, cat);
                         }
                         case 0 -> runMenu();
                         default -> System.out.println("Invalid option entered: " + option);
                     }
-                    if (isUpdated) {
-                        System.out.println("Pet Updated Successfully");
-                    } else {
-                        System.out.println("No Pet Updated");
-                    }
                 }
-            } else {
-                System.out.println("No pets added yet");
+                if (isUpdated) {
+                    System.out.println("Pet Updated Successfully");
+                } else {
+                    System.out.println("No Pet Updated");
+                }
             }
+        } else {
+            System.out.println("No pets added yet");
+        }
     }
 
     private void deletePetMenu() {
@@ -388,17 +386,22 @@ public class Driver {
 
 //TODO - write all the methods that are called from your menu
 
-    private void searchPets() {
-
+    //------------------------------------
+    // SEARCHING AND SORTING METHODS
+    // ------------------------------------
+    private void searchPetsByName() {
+        String productName = ScannerInput.readNextLine("Please enter a pet name to search by:");
+        System.out.println(daycare.searchByProductName(productName));
     }
 
-    private void sortPets() {
-
+    private void sortPetsByName() {
+        store.sortProductsByUnitCostAscending();
+        System.out.println(store.listProducts());
     }
 
-    //---------------------------------------------------------------------
-    //  Options 5 and 6 - Save and Load Pets
-    //---------------------------------------------------------------------
+    //------------------------------------
+    // PERSISTENCE METHODS
+    // ------------------------------------
 
     //save all the pets in the DayCare to a file on the hard disk
     private void savePets() {
@@ -425,6 +428,20 @@ public class Driver {
     //---------------------
     //  Helper Methods
     //---------------------
+
+    private Pet askUserToSelectPet() {
+        printProducts();
+        if (store.numberOfProducts() > 0) {
+            Product product = store.findProduct(ScannerInput.readNextInt("Enter the index of the product: "));
+            if (product != null) {
+                return product;
+            } else {
+                System.out.println("Product index is not valid");
+            }
+        }
+        return null;
+    }
+}
 
 //TODO- write any helper methods that are required
 
