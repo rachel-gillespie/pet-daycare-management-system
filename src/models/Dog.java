@@ -1,5 +1,7 @@
 package models;
 
+import utils.Utilities;
+
 import java.util.Objects;
 
 /**
@@ -21,7 +23,7 @@ public class Dog extends Pet {
     //------------------------------------
     public Dog(String owner, String petName, int age, char sex, int id, boolean neutered, boolean[] daysAttending, String breed, boolean dangerousBreed) {
         super(owner, petName, age, sex, id, neutered, daysAttending);
-        this.breed = breed;
+        this.breed = Utilities.truncateString(breed, 20);
         this.dangerousBreed = dangerousBreed;
     }
 
@@ -52,9 +54,9 @@ public class Dog extends Pet {
         // gets daily rate for dog depending on whether dangerous or not
         //multiply rate by number of days in kennel and returns answer
         if (dangerousBreed) {
-            return DANGEROUS_DAILY_RATE * numberOfDaysInKennel();
+            return DANGEROUS_DAILY_RATE * numOfDaysInKennel();
         } else {
-            return NONDANGEROUS_DAILY_RATE * numberOfDaysInKennel();
+            return NONDANGEROUS_DAILY_RATE * numOfDaysInKennel();
         }
     }
 

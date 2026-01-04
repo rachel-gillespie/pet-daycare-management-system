@@ -48,9 +48,9 @@ public class Cat extends Pet {
         // base rate is 20 per day,
         //an extra 5 is added if the cat is an indoor cat
         if (indoorCat) {
-            return 25 * numberOfDaysInKennel();
+            return 25 * numOfDaysInKennel();
         } else {
-            return 20 * numberOfDaysInKennel();
+            return 20 * numOfDaysInKennel();
         }
     }
 

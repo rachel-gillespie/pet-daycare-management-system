@@ -103,7 +103,7 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
     public void checkIn(int dayIndex) { // returns nothing. A number indicating the day of the week is passed to the method.
         // if valid dayIndex >=0 < 5
         if ((dayIndex >= 0) && (dayIndex < 5)) {
-            //  assign that element of the array to true
+            // assign that element of the array to true
             daysAttending[dayIndex] = true;
         }
     }
@@ -111,12 +111,12 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
     public void checkOut(int dayIndex) { // returns nothing. A number indicating the day of the week is passed to the method.
         // if valid dayIndex >=0 < 5
         if ((dayIndex >= 0) && (dayIndex < 5)) {
-            //  assign that element of the array to false.
+            // assign that element of the array to false.
             daysAttending[dayIndex] = false;
         }
     }
 
-    public int numberOfDaysInKennel() { //
+    public int numOfDaysInKennel() { //
         // iterates through array
         int days = 0;
         for (int i = 0; i < daysAttending.length; i++) {
@@ -129,7 +129,8 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
         return days;
     }
 
-    public String toString() { // builds and returns a String containing a user-friendly representation of the object state
-        return "Pet{" + "Owner = " + owner + '\'' + ", Age = " + age + ", Sex = " + sex + ", Days Attending = " + Arrays.toString(daysAttending) + ", ID = " + id + ", Name = " + petName + '\'' + '}';
+    @Override
+    public String toString() {
+        return "Pet{" + "Owner = " + owner + '\'' + ", Age = " + age + ", Sex = " + sex + ", Days Attending = " + Arrays.toString(daysAttending) + ", Id = " + id + ", Pet's Name = '" + petName + '\'' + ", Neutered = " + neutered + '}';
     }
 }

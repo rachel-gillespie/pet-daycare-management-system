@@ -1,5 +1,7 @@
 package models;
 
+import utils.Utilities;
+
 /**
  * The responsibility for this concrete class is to extend Pet and implement the class for a Rabbit.
  */
@@ -18,7 +20,7 @@ public class Rabbit extends Pet {
     public Rabbit(String owner, String petName, int age, char sex, int id, boolean neutered, boolean[] daysAttending, boolean litterTrained, String breed) {
         super(owner, petName, age, sex, id, neutered, daysAttending);
         this.litterTrained = litterTrained;
-        this.breed = breed;
+        this.breed = Utilities.truncateString(breed, 20);
     }
 
     //------------------------------------
@@ -48,14 +50,14 @@ public class Rabbit extends Pet {
         // base rate is 15 per day,
         // an extra 3 is added if the rabbit is not litter trained
         if (litterTrained) {
-            return 15 * numberOfDaysInKennel();
+            return 15 * numOfDaysInKennel();
         } else {
-            return 18 * numberOfDaysInKennel();
+            return 18 * numOfDaysInKennel();
         }
     }
 
     @Override
     public String toString() {
-        return "Rabbit{" + "litter trained= " + litterTrained + ", breed= '" + breed + '\'' + "} " + super.toString();
+        return "Rabbit{" + "litterTrained=" + litterTrained + ", breed='" + breed + '\'' + "} " + super.toString();
     }
 }

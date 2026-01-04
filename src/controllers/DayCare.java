@@ -29,7 +29,7 @@ public class DayCare implements ISerializer {
     //------------------------------------
     //              FIELDS
     //------------------------------------
-    private List<Pet> pets; //
+    private List<Pet> pets; //interface type
     private String name = ""; //max 20 chars
     private int maxNumberOfPets = 0; // the max number of pets the kennels has space for, can change over time
 
@@ -46,7 +46,7 @@ public class DayCare implements ISerializer {
      */
     public DayCare(String name, int maxNumberOfPets) {
         this.name = name;
-        pets = new ArrayList<>();
+        pets = new ArrayList<>(); // concrete implementation
         this.maxNumberOfPets = maxNumberOfPets;
     }
 
@@ -68,7 +68,7 @@ public class DayCare implements ISerializer {
      *
      * @return A list of Pet objects
      */
-    public List<Pet> getPets() {
+    public List<Pet> getPetsList() {
         return pets;
     }
 
@@ -504,7 +504,7 @@ public class DayCare implements ISerializer {
         } else {
             String str = "";
             for (Pet p : pets) {
-                if (p.numberOfDaysInKennel() > numDays) {
+                if (p.numOfDaysInKennel() > numDays) {
                     str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
@@ -627,7 +627,7 @@ public class DayCare implements ISerializer {
     public double getAverageNumDaysPerWeek() {
         double total = 0;
         for (Pet p : pets) {
-            total += p.numberOfDaysInKennel();
+            total += p.numOfDaysInKennel();
         }
         return total / numberOfPets();
     }
@@ -687,7 +687,7 @@ public class DayCare implements ISerializer {
      *
      * @param name The name or partial name to search for
      * @return A string containing all matching pets with their index numbers,
-     *         or "No pets match your search" if no matches are found
+     * or "No pets match your search" if no matches are found
      */
     public String searchByName(String name) {
         String matchingPets = "";

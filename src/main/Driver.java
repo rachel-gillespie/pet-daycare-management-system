@@ -1,17 +1,11 @@
 package main;
 
-import com.thoughtworks.xstream.io.xml.DocumentWriter;
 import controllers.DayCare;
 import models.*;
 import utils.CatToyUtility;
 import utils.DogBreedUtility;
 import utils.ScannerInput;
 import utils.Utilities;
-
-import java.security.PrivateKey;
-import java.time.chrono.IsoChronology;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * The responsibility of the Driver class is to run the app and perform I/O with the user.
@@ -22,12 +16,11 @@ public class Driver {
     private static DayCare daycare;
 
     public static void main(String[] args) {
-        daycare = new DayCare("Paws and Whistles Day Care", 0);
+        daycare = new DayCare("Paws and Whistles Day Care", 200);
         new Driver();
     }
 
     public Driver() {
-        System.out.println("");
         runMenu();
     }
 
@@ -75,14 +68,14 @@ public class Driver {
                 case 9 -> loadPets();
                 default -> System.out.println("Invalid option entered: " + option);
             }
-            //pause the program so that the user can read what we just printed to the terminal window
+            // Pause the program so that the user can read what we just printed to the terminal window
             ScannerInput.readNextLine("\nPress enter key to continue...");
 
-            //display the main menu again
+            // Display the main menu again
             option = mainMenu();
         }
 
-        //the user chose option 0, so exit the program
+        // The user chose option 0, so exit the program
         System.out.println("Exiting...bye");
         System.exit(0);
 
@@ -100,6 +93,12 @@ public class Driver {
                 -------------------------------------
                 ==>>""");
 
+        // Handle option 0 FIRST before collecting any input
+        if (option == 0) {
+            return;  // Simply exit the method, returning to runMenu()
+        }
+
+        // Shows user the generic Pet questions before asking Dog/Cat questions based on input from menu.
         String owner = ScannerInput.readNextLine("Enter Owner's Name: ");
         int age = ScannerInput.readNextInt("Enter Pet's age: ");
         char sex = ScannerInput.readNextChar("Enter Pet's sex (m/f): ");
@@ -125,7 +124,7 @@ public class Driver {
         boolean isAdded = false;
 
         switch (option) {
-            case 1 -> {
+            case 1 -> { // If user chose Dog
                 String breed = ScannerInput.readNextLine("What breed is your dog?: ");
                 while (!DogBreedUtility.checkBreed(breed)) {
                     breed = ScannerInput.readNextLine("Invalid breed, What breed is your dog?: ");
@@ -139,7 +138,7 @@ public class Driver {
                 Dog dog = new Dog(owner, petName, age, sex, id, neutered, daysAttending, breed, dangerousBreed);
                 isAdded = daycare.addPet(dog);
             }
-            case 2 -> {
+            case 2 -> { // If user chose Cat
                 char indoorCatInput = ScannerInput.readNextChar("Is the cat an indoor cat? (y/n): ");
                 while (indoorCatInput != 'y' && indoorCatInput != 'n') {
                     indoorCatInput = ScannerInput.readNextChar("Invalid option " + indoorCatInput + ", Is the cat an indoor cat? (y/n): ");
@@ -154,7 +153,6 @@ public class Driver {
                 Cat cat = new Cat(owner, petName, age, sex, id, neutered, daysAttending, indoorCat, favouriteToy);
                 isAdded = daycare.addPet(cat);
             }
-            case 0 -> runMenu();
             default -> System.out.println("Invalid option entered: " + option);
         }
         if (isAdded) {
@@ -176,18 +174,20 @@ public class Driver {
                 |   5) List all Indoor Cats                 |
                 |   6) List all Dogs older than an age      |
                 |   7) List all Cats by Favourite Toy       |
-                |   8) List all Pets that are neutered      |
-                |   9) Number of Dogs                       |
-                |   10) Number of Dangerous Dogs            |
-                |   11) Number of Cats                      |
-                |   12) Number of Indoor Cats               |
-                |   13) Produce Weekly Income Report        |
+                |   8) List all Pets that stay for ? days   |
+                |   9) List all Pets that are neutered      |
+                |   10) Number of Dogs                      |
+                |   11) Number of Dangerous Dogs            |
+                |   12) Number of Cats                      |
+                |   13) Number of Indoor Cats               |
+                |   14) Produce Weekly Income Report        |
                 ---------------------------------------------
                 |   0) Return to Main Menu                  |
                 ---------------------------------------------
                 ==>>""");
 
         switch (option) {
+            case 0 -> runMenu();
             case 1 -> showPets();
             case 2 -> showDogs();
             case 3 -> showCats();
@@ -195,13 +195,13 @@ public class Driver {
             case 5 -> showIndoorCats();
             case 6 -> showAllDogsOlderThan();
             case 7 -> showCatsByFavToy();
-            case 8 -> showPetsNeutered();
-            case 9 -> dogsCount();
-            case 10 -> dangerousDogsCount();
-            case 11 -> catsCount();
-            case 12 -> indoorCatsCount();
-            case 13 -> showWeeklyIncome();
-            case 0 -> runMenu();
+            case 8 -> showPetsMoreThanDays();
+            case 9 -> showPetsNeutered();
+            case 10 -> dogsCount();
+            case 11 -> dangerousDogsCount();
+            case 12 -> catsCount();
+            case 13 -> indoorCatsCount();
+            case 14 -> showWeeklyIncome();
             default -> System.out.println("Invalid option entered: " + option);
         }
 
@@ -249,6 +249,12 @@ public class Driver {
         String toy = ScannerInput.readNextLine("Enter a toy: ");
         System.out.println("List of all cats whose Favourite Toy is " + toy + ": ");
         System.out.println(daycare.listAllCatsByFavToy(toy));
+    }
+
+    private void showPetsMoreThanDays() {
+        int day = ScannerInput.readNextInt("Enter an amount of days: ");
+        System.out.println("List of all pets that stay more than " + day + " days's: ");
+        System.out.println(daycare.listAllPetsThatStayMoreThanDays(day));
     }
 
     //print all the pets that are neutered in daycare
@@ -313,12 +319,13 @@ public class Driver {
     private void updatePet() {
         boolean isUpdated = false;
         showPets();
-        if (daycare.numberOfPets() > 0) {
-            int idToUpdate = ScannerInput.readNextInt("Enter the id of the pet to update ==> ");
-            while (daycare.isValidId(idToUpdate)) {
-                idToUpdate = ScannerInput.readNextInt("Enter the correct id of the pet to update ==> ");
+        if (daycare.numberOfPets() > 0) { // Checks if pets exist in the daycare
+            int id = ScannerInput.readNextInt("Enter the id of the pet to update ==> ");
+            while (!daycare.isValidId(id)) { // Checks if the ID exists in the daycare
+                id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
             }
-            System.out.println("Pet you are updating: " + daycare.getPetById(idToUpdate).toString());
+            System.out.println("Pet you are updating: " + daycare.getPetById(id).toString());
+            // Shows user the generic Pet questions before asking Dog/Cat questions based on input from menu.
             String owner = ScannerInput.readNextLine("Enter Owner's Name: ");
             int age = ScannerInput.readNextInt("Enter Pet's age: ");
             char sex = ScannerInput.readNextChar("Enter Pet's sex (m/f): ");
@@ -330,9 +337,9 @@ public class Driver {
             for (int i = 0; i < 5; i++) {
                 daysAttending[i] = Utilities.YNtoBoolean(ScannerInput.readNextChar("Attending " + weekDays[i] + "? (y/n)"));
             }
-            int id = ScannerInput.readNextInt("Enter Pet id number: ");
-            while (!daycare.isValidId(id) && id != idToUpdate) {
-                id = ScannerInput.readNextInt("Invalid Pet id (already in use), Enter another Pet id number: ");
+            int idToUpdate = ScannerInput.readNextInt("Enter Pet id number: ");
+            while (!daycare.isValidId(idToUpdate)) {
+                idToUpdate = ScannerInput.readNextInt("Invalid Pet id (already in use), Enter another Pet id number: ");
             }
             String petName = ScannerInput.readNextLine("Enter the Pet's Name: ");
             char neuteredInput = ScannerInput.readNextChar("Is pet neutered? (y/n): ");
@@ -340,7 +347,8 @@ public class Driver {
                 neuteredInput = ScannerInput.readNextChar("Invalid option " + neuteredInput + " Is pet neutered? (y/n): ");
             }
             boolean neutered = Utilities.YNtoBoolean(neuteredInput);
-            if (daycare.getPetById(idToUpdate) instanceof Dog) {
+            // Checks to see if the id is an instance of Dog
+            if (daycare.getPetById(id) instanceof Dog) {
                 String breed = ScannerInput.readNextLine("What breed is your dog?: ");
                 while (!DogBreedUtility.checkBreed(breed)) {
                     breed = ScannerInput.readNextLine("Invalid breed, What breed is your dog?: ");
@@ -350,23 +358,23 @@ public class Driver {
                     dangerousBreedInput = ScannerInput.readNextChar("Invalid option " + dangerousBreedInput + " Is dog dangerous breed? (y/n): ");
                 }
                 boolean dangerousBreed = Utilities.YNtoBoolean(dangerousBreedInput);
-
-                Dog dog = new Dog(owner, petName, age, sex, id, neutered, daysAttending, breed, dangerousBreed);
-                isUpdated = daycare.updatePet(idToUpdate, dog);
-            } else if (daycare.getPetById(idToUpdate) instanceof Cat) {
+                Dog dog = new Dog(owner, petName, age, sex, idToUpdate, neutered, daysAttending, breed, dangerousBreed);
+                isUpdated = daycare.updatePet(id, dog); // Update pet information
+                // If the id is not an instance of Dog and is an instance of Cat
+            } else if (daycare.getPetById(id) instanceof Cat) {
                 char indoorCatInput = ScannerInput.readNextChar("Is the cat an indoor cat? (y/n): ");
                 while (indoorCatInput != 'y' && indoorCatInput != 'n') {
                     indoorCatInput = ScannerInput.readNextChar("Invalid option " + indoorCatInput + ", Is the cat an indoor cat? (y/n): ");
                 }
                 boolean indoorCat = Utilities.YNtoBoolean(indoorCatInput);
+                System.out.println(CatToyUtility.getCatToys());
                 String favouriteToy = ScannerInput.readNextLine("What is the cat's favourite toy?: ");
                 CatToyUtility.getCatToys();
                 while (!CatToyUtility.isCatToy(favouriteToy)) {
                     favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
                 }
-
-                Cat cat = new Cat(owner, petName, age, sex, id, neutered, daysAttending, indoorCat, favouriteToy);
-                isUpdated = daycare.updatePet(idToUpdate, cat);
+                Cat cat = new Cat(owner, petName, age, sex, idToUpdate, neutered, daysAttending, indoorCat, favouriteToy);
+                isUpdated = daycare.updatePet(id, cat); // Update pet information
             }
             if (isUpdated) {
                 System.out.println("Pet Updated Successfully");
@@ -391,14 +399,19 @@ public class Driver {
                     |   0) Return to Main Menu          |
                     -------------------------------------
                     ==>>""");
+
+            // Early exit if user wants to return
+            if (option == 0) {
+                return;
+            }
             switch (option) {
                 case 1 -> {
                     showPets();
                     if (daycare.numberOfPets() > 0) {
                         //only ask the user to choose the pet to delete if pets exist
                         int indexToDelete = ScannerInput.readNextInt("Enter the index of the pet to delete ==> ");
-                        while (Utilities.isValidIndex(daycare.getPets(), indexToDelete)) {
-                            indexToDelete = ScannerInput.readNextInt("Enter the correct id of the pet to update ==> ");
+                        while (!Utilities.isValidIndex(daycare.getPetsList(), indexToDelete)) { // Check to see if it's a valid index
+                            indexToDelete = ScannerInput.readNextInt("Enter the correct index of the pet to delete ==> ");
                         }
                         //pass the index of the pet to DayCare for deleting and check for success
                         Pet petToDelete = daycare.deletePetByIndex(indexToDelete);
@@ -413,9 +426,9 @@ public class Driver {
                     showPets();
                     if (daycare.numberOfPets() > 0) {
                         //only ask the user to choose the pet to delete if pets exist
-                        int idToDelete = ScannerInput.readNextInt("Enter the index of the pet to delete ==> ");
-                        while (daycare.isValidId(idToDelete)) {
-                            idToDelete = ScannerInput.readNextInt("Enter the correct id of the pet to update ==> ");
+                        int idToDelete = ScannerInput.readNextInt("Enter the id of the pet to delete ==> ");
+                        while (daycare.getPetById(idToDelete) == null) { // Check to see if pet exists
+                            idToDelete = ScannerInput.readNextInt("Enter a valid pet id to delete ==> ");
                         }
                         //pass the id of the pet to DayCare for deleting and check for success.
                         Pet petToDelete = daycare.deletePetById(idToDelete);
@@ -426,7 +439,6 @@ public class Driver {
                         }
                     }
                 }
-                case 0 -> runMenu();
                 default -> System.out.println("Invalid option entered: " + option);
             }
         }
@@ -445,7 +457,7 @@ public class Driver {
                 |         SEARCH & SORT PETS        |
                 -------------------------------------
                 |   1) Search Pets by Name          |
-                |   2) Sort Pets by Age             |
+                |   2) Search Pets by Owner         |
                 -------------------------------------
                 |   0) Return to Main Menu          |
                 -------------------------------------
@@ -454,14 +466,19 @@ public class Driver {
         switch (option) {
             case 0 -> runMenu();
             case 1 -> searchPetsByName();
-            case 2 -> sortPetsByAge();
+            case 2 -> searchPetsByOwner();
             default -> System.out.println("Invalid option entered: " + option);
         }
     }
 
     private void searchPetsByName() {
-        String petName = ScannerInput.readNextLine("Please enter a pet petName to search by:");
+        String petName = ScannerInput.readNextLine("Please enter a Pet Name to search by:");
         System.out.println(daycare.searchByName(petName));
+    }
+
+    private void searchPetsByOwner() {
+        String ownerPet = ScannerInput.readNextLine("Please enter an owner to search by:");
+        System.out.println(daycare.getPetsByOwnersName(ownerPet));
     }
 
     private void sortPetsByAge() {
@@ -497,32 +514,21 @@ public class Driver {
     }
 
     private void daycareName() {
-
+        System.out.println(daycare.getName());
     }
 
     private void petsList() {
-
+        System.out.println(daycare.getPetsList());
     }
 
     private void maxNumPets() {
-
+        System.out.println(daycare.getMaxNumberOfPets());
     }
 
-//---------------------
-//  Helper Methods
-//---------------------
-//    private Pet askUserToSelectPet() {
-//        printProducts();
-//        if (store.numberOfProducts() > 0) {
-//            Product product = store.findProduct(ScannerInput.readNextInt("Enter the index of the product: "));
-//            if (product != null) {
-//                return product;
-//            } else {
-//                System.out.println("Product index is not valid");
-//            }
-//        }
-//        return null;
-//    }
+    //---------------------------------
+    //        HELPER METHODS
+    //---------------------------------
+
 
     //------------------------------------
     //        PERSISTENCE METHODS
@@ -537,7 +543,7 @@ public class Driver {
         }
     }
 
-    //load all the posts into the DayCare from a file on the hard disk
+    //load all the pets into the DayCare from a file on the hard disk
     private void loadPets() {
         try {
             System.out.println("Loading from file: " + daycare.fileName());
@@ -546,11 +552,5 @@ public class Driver {
             System.err.println("Error reading from file: " + e);
         }
     }
-
-//    private void exitApp() {
-//
-//        System.out.println("Exiting....");
-//        System.exit(0);
-//    }
 
 }
