@@ -1,28 +1,65 @@
-Name :
+Name : Rachel Gillespie
 
-Student Number:
-
+Student Number: 20118715
 
 - Chronology of your implementation (what you did first, etc...)
+1) I started on the 'models' (Inheritance Hierarchy) part of the assignment as suggested in the 'Plan of Action/Attack'.
+- I wrote the code for Pet (abstract)
+- I wrote the code for Dog
+- I wrote the code for Cat
 
-- Main difficulties you came across in your development of solution and how you solved them.
+2) I then moved onto the 'controllers' (DayCare Class)
+- Write dummy code for all methods (as per UML), this means write in the method headers and basic implementation to get the code compiled, at a later time you will write the implementation for each method.
+- Write Javadoc for this class. Remember, Javadoc code should describe what is being done, what is being returned, not how it is being done. It is like the instructions in a user-manual.
+- basic CRUD
+- reporting/numberOf methods
+- validation methods & persistence
+- other
 
-- Any bugs remaining in the solution or unfinished elements of spec
+3) I then moved onto the Driver and UX
+- Write the driver as before, using the usual console-based menu system.
+- As you work through each menu option, you should write the code in the Driver and write the body of the method in the controller that you need to call (replace the dummy code). Your code should compile and produce the expected output before moving on to the next menu item
+- Menu Structure
+- Presentation
+- ArrayList CRUD - all types handled
+- Reports Menu - for all pets
+- Other
 
-- Main learnings from your engagement with assignment
+4) DX (Overall Style)
+- Code correctly commented
+- Standard naming, indentation, DRY Code etc.
+- Javadoc written for DayCare
 
-- Answer the following questions:
+5) Extras (not in Spec)
+- Added Rabbit and RabbitBreedUtility Classes
+
+Main difficulties you came across in your development of solution and how you solved them:
+    -
+
+Any bugs remaining in the solution or unfinished elements of spec:
+    -
+
+Main learnings from your engagement with assignment:
+    -
+
+Answer the following questions:
      1. Pat Purrs mentioned a problem their friend had with their pet system. What was the issue with that system, and how is your design intended to avoid the same problem?
+
+
      2. Why does Pat want the Driver class to be simple and user-friendly, and how does this relate to the plan to eventually develop a mobile app?
+
+
      3. Pat talked about future expansion of the daycare. What kinds of growth does the system need to support, and how should your code design accommodate this?
+
+
      4. Besides cats and dogs, what additional animal does Pat plan to include next, and what does this imply for how you structure your inheritance hierarchy?
 
+
 Mandatory : Please list any references used in your development/ implementation of your submission.
+    -
 
 Please consider the following statements and choose one (delete the inappropriate one)
 
-- This is my work apart from the specific references noted above (and any code from class notes). I understand the code and can describe any parts of the solution if needs be;
-
-- This is not all my own work - I'm not sure if I understand what I am submitting. 
+    - This is my work apart from the specific references noted above (and any code from class notes). I understand the code and can describe any parts of the solution if needs be;
 
 

@@ -56,6 +56,6 @@ public class Rabbit extends Pet {
 
     @Override
     public String toString() {
-        return "Rabbit{" + "litter_trained=" + litterTrained + ", breed='" + breed + '\'' + "} " + super.toString();
+        return "Rabbit{" + "litter trained= " + litterTrained + ", breed= '" + breed + '\'' + "} " + super.toString();
     }
 }

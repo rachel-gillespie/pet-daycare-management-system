@@ -679,9 +679,11 @@ public class DayCare implements ISerializer {
     //------------------------------------
 
     /**
+     * Searches for pets whose names contain the specified search term (case-insensitive).
      *
-     * @param name
-     * @return
+     * @param name The name or partial name to search for
+     * @return A string containing all matching pets with their index numbers,
+     *         or "No pets match your search" if no matches are found
      */
     public String searchByName(String name) {
         String matchingPets = "";
