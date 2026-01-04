@@ -1,8 +1,5 @@
 package models;
 
-import utils.CatToyUtility;
-import utils.Utilities;
-
 /**
  * The responsibility for this concrete class is to extend Pet and implement the class for a Cat.
  */
@@ -18,8 +15,8 @@ public class Cat extends Pet {
     //------------------------------------
     //            CONSTRUCTOR
     //------------------------------------
-    public Cat(String owner, int age, char sex, int id, String name, boolean neutered, boolean indoorCat, String favouriteToy) {
-        super(owner, age, sex, id, name, neutered);
+    public Cat(String owner, String petName, int age, char sex, int id, boolean neutered, boolean[] daysAttending, boolean indoorCat, String favouriteToy) {
+        super(owner, petName, age, sex, id, neutered, daysAttending);
         this.indoorCat = indoorCat;
         this.favouriteToy = favouriteToy;
     }

@@ -19,8 +19,8 @@ public class Dog extends Pet {
     //------------------------------------
     //            CONSTRUCTOR
     //------------------------------------
-    public Dog(String name, int age, char sex, String owner, boolean neutered, int id, String breed, boolean dangerousBreed) {
-        super(owner, age, sex, id, name, neutered);
+    public Dog(String owner, String petName, int age, char sex, int id, boolean neutered, boolean[] daysAttending, String breed, boolean dangerousBreed) {
+        super(owner, petName, age, sex, id, neutered, daysAttending);
         this.breed = breed;
         this.dangerousBreed = dangerousBreed;
     }

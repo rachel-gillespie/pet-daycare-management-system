@@ -115,7 +115,7 @@ public class Driver {
         while (!daycare.isValidId(id)) {
             id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
         }
-        String name = ScannerInput.readNextLine("Enter the Pet's name: ");
+        String petName = ScannerInput.readNextLine("Enter the Pet's petName: ");
         char neuteredInput = ScannerInput.readNextChar("Is pet neutered? (y/n): ");
         while (neuteredInput != ('y') && neuteredInput != 'n') {
             neuteredInput = ScannerInput.readNextChar("Invalid option " + neuteredInput + " Is pet neutered? (y/n): ");
@@ -136,7 +136,7 @@ public class Driver {
                 }
                 boolean dangerousBreed = Utilities.YNtoBoolean(dangerousBreedInput);
 
-                Dog dog = new Dog(name, age, sex, owner, neutered, id, breed, dangerousBreed);
+                Dog dog = new Dog(owner, petName, age, sex, id, neutered, daysAttending, breed, dangerousBreed);
                 isAdded = daycare.addPet(dog);
             }
             case 2 -> {
@@ -147,11 +147,11 @@ public class Driver {
                 boolean indoorCat = Utilities.YNtoBoolean(indoorCatInput);
                 System.out.println(CatToyUtility.getCatToys());
                 String favouriteToy = ScannerInput.readNextLine("What is the cat's favourite toy?: ");
-                while (!CatToyUtility.isCatToy(favouriteToy)) {
+                while (!CatToyUtility.isCatToy(favouriteToy.toUpperCase())) {
                     favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
                 }
 
-                Cat cat = new Cat(owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
+                Cat cat = new Cat(owner, petName, age, sex, id, neutered, daysAttending, indoorCat, favouriteToy);
                 isAdded = daycare.addPet(cat);
             }
             case 0 -> runMenu();
@@ -334,7 +334,7 @@ public class Driver {
             while (!daycare.isValidId(id)) {
                 id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
             }
-            String name = ScannerInput.readNextLine("Enter the Pet's name: ");
+            String petName = ScannerInput.readNextLine("Enter the Pet's petName: ");
             char neuteredInput = ScannerInput.readNextChar("Is pet neutered? (y/n): ");
             while (neuteredInput != ('y') && neuteredInput != 'n') {
                 neuteredInput = ScannerInput.readNextChar("Invalid option " + neuteredInput + " Is pet neutered? (y/n): ");
@@ -351,7 +351,7 @@ public class Driver {
                 }
                 boolean dangerousBreed = Utilities.YNtoBoolean(dangerousBreedInput);
 
-                Dog dog = new Dog(name, age, sex, owner, neutered, id, breed, dangerousBreed);
+                Dog dog = new Dog(owner, petName, age, sex, id, neutered, daysAttending, breed, dangerousBreed);
                 isUpdated = daycare.updatePet(idToUpdate, dog);
             } else if (daycare.getPetById(idToUpdate) instanceof Cat) {
                 char indoorCatInput = ScannerInput.readNextChar("Is the cat an indoor cat? (y/n): ");
@@ -365,7 +365,7 @@ public class Driver {
                     favouriteToy = ScannerInput.readNextLine("Invalid cat toy, What is the cat's favourite toy?: ");
                 }
 
-                Cat cat = new Cat(owner, age, sex, id, name, neutered, indoorCat, favouriteToy);
+                Cat cat = new Cat(owner, petName, age, sex, id, neutered, daysAttending, indoorCat, favouriteToy);
                 isUpdated = daycare.updatePet(idToUpdate, cat);
             }
             if (isUpdated) {
@@ -397,10 +397,10 @@ public class Driver {
                     if (daycare.numberOfPets() > 0) {
                         //only ask the user to choose the pet to delete if pets exist
                         int indexToDelete = ScannerInput.readNextInt("Enter the index of the pet to delete ==> ");
-                        while (daycare.isValidId(indexToDelete)) {
+                        while (Utilities.isValidIndex(daycare.getPets(), indexToDelete)) {
                             indexToDelete = ScannerInput.readNextInt("Enter the correct id of the pet to update ==> ");
                         }
-                        //pass the index of the pet to DayCare for deleting and check for success.
+                        //pass the index of the pet to DayCare for deleting and check for success
                         Pet petToDelete = daycare.deletePetByIndex(indexToDelete);
                         if (petToDelete != null) {
                             System.out.println("Delete Successful! Deleted pet: " + petToDelete.toString());
@@ -460,7 +460,7 @@ public class Driver {
     }
 
     private void searchPetsByName() {
-        String petName = ScannerInput.readNextLine("Please enter a pet name to search by:");
+        String petName = ScannerInput.readNextLine("Please enter a pet petName to search by:");
         System.out.println(daycare.searchByName(petName));
     }
 

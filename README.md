@@ -8,7 +8,7 @@ A Java-based console application for managing a pet day care facility. This syst
 - **Add Pets**: Register dogs, cats, and rabbits with their specific attributes
 - **Update Pets**: Modify existing pet information
 - **Delete Pets**: Remove pets by index or ID
-- **Search Pets**: Find pets by name or owner
+- **Search Pets**: Find pets by petName or owner
 
 ### Pet Types Supported
 - **Dogs**: Track breed, dangerous breed status, and neutered status
@@ -82,12 +82,12 @@ src/
 2. Choose option 1 (Add a new Pet)
 3. Select pet type (Dog or Cat)
 4. Enter required information:
-    - Owner's name
+    - Owner's petName
     - Pet's age
     - Sex (m/f)
     - Days attending (Mon-Fri)
     - Unique ID number
-    - Pet's name
+    - Pet's petName
     - Neutered status
 
 #### Dog-Specific Fields
@@ -171,7 +171,7 @@ Pet data is persisted to `pets.xml` in the project root directory using XStream 
 
 ### Pet (Abstract Model)
 - Base class for all pet types
-- Common attributes: owner, age, sex, ID, name, neutered status
+- Common attributes: owner, age, sex, ID, petName, neutered status
 - Days attending tracking
 - Abstract method for fee calculation
 

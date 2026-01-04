@@ -15,8 +15,8 @@ public class Rabbit extends Pet {
     //------------------------------------
     //            CONSTRUCTOR
     //------------------------------------
-    public Rabbit(String owner, int age, char sex, int id, String name, boolean neutered, boolean litterTrained, String breed) {
-        super(owner, age, sex, id, name, neutered);
+    public Rabbit(String owner, int age, char sex, int id, String petName, boolean neutered, boolean litterTrained, String breed) {
+        super(owner, age, sex, id, petName, neutered, false);
         this.litterTrained = litterTrained;
         this.breed = breed;
     }

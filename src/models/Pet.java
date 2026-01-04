@@ -18,19 +18,20 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
     private char sex = 'f';
     private boolean[] daysAttending = new boolean[5];
     private int id = 1000;
-    private String name; //truncates to 30 chars
+    private String petName; //truncates to 30 chars
     private boolean neutered = false;
 
     //------------------------------------
     //            CONSTRUCTOR
     //------------------------------------
-    public Pet(String owner, int age, char sex, int id, String name, boolean neutered) { // these are the local variables/parameters
+    public Pet(String owner, String petName, int age, char sex, int id, boolean neutered, boolean[] daysAttending) { // these are the local variables/parameters
         this.owner = owner; //this keyword is used to distinguish between the variables, this refers to the current object fields
         this.age = age;
         this.sex = sex;
         this.id = id;
-        this.name = name;
+        this.petName = petName;
         this.neutered = neutered;
+        this.daysAttending = daysAttending;
     }
 
     //------------------------------------
@@ -56,8 +57,8 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getPetName() {
+        return petName;
     }
 
     public boolean isNeutered() {
@@ -89,8 +90,8 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
         }
     }
 
-    public void setName(String name) {
-        this.name = Utilities.truncateString(name, 30);
+    public void setPetName(String petName) {
+        this.petName = Utilities.truncateString(petName, 30);
     }
 
     public void setNeutered(boolean neutered) {
@@ -129,6 +130,6 @@ public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as 
     }
 
     public String toString() { // builds and returns a String containing a user-friendly representation of the object state
-        return "Pet{" + "Owner = " + owner + '\'' + ", Age = " + age + ", Sex = " + sex + ", Days Attending = " + Arrays.toString(daysAttending) + ", ID = " + id + ", Name = " + name + '\'' + '}';
+        return "Pet{" + "Owner = " + owner + '\'' + ", Age = " + age + ", Sex = " + sex + ", Days Attending = " + Arrays.toString(daysAttending) + ", ID = " + id + ", Name = " + petName + '\'' + '}';
     }
 }

@@ -4,7 +4,6 @@ import models.Cat;
 import models.Dog;
 import models.Pet;
 import utils.ISerializer;
-import utils.ScannerInput;
 import utils.Utilities;
 
 import com.thoughtworks.xstream.XStream;
@@ -164,7 +163,7 @@ public class DayCare implements ISerializer {
      */
     public Pet getPetName(String name) {
         for (Pet p : pets) {
-            if (p.getName().equals(name)) {
+            if (p.getPetName().equals(name)) {
                 return p;
             }
         }
@@ -219,7 +218,7 @@ public class DayCare implements ISerializer {
             foundPet.setSex(updatedDetails.getSex());
             foundPet.setDaysAttending(updatedDetails.getDaysAttending());
             foundPet.setId(updatedDetails.getId());
-            foundPet.setName(updatedDetails.getName());
+            foundPet.setPetName(updatedDetails.getPetName());
             if (foundPet instanceof Dog) {
                 updateDog(id, (Dog) updatedDetails); //casting updated details to Dog
             } else if (foundPet instanceof Cat) {
@@ -480,12 +479,12 @@ public class DayCare implements ISerializer {
         } else {
             String str = "";
             for (Pet p : pets) {
-                if (p.getOwner().equals(name)) {
+                if (p.getOwner().equals(owner)) {
                     str += pets.indexOf(p) + ": " + p.toString() + "\n";
                 }
             }
             if (str.isEmpty()) {
-                return "No Pet with owner " + name;
+                return "No Pet with owner " + owner;
             } else {
                 return str;
             }
@@ -643,7 +642,7 @@ public class DayCare implements ISerializer {
      */
     public Pet findDogByOwnerAndBreedAndAge(String name, String breed, int age) {
         for (Pet p : pets) {
-            if (p instanceof Dog dog && dog.getName().equals(name) && dog.getBreed().equals(breed) && dog.getAge() == age) {
+            if (p instanceof Dog dog && dog.getPetName().equals(name) && dog.getBreed().equals(breed) && dog.getAge() == age) {
                 return p;
             }
         }
@@ -693,7 +692,7 @@ public class DayCare implements ISerializer {
     public String searchByName(String name) {
         String matchingPets = "";
         for (Pet p : pets) {
-            if (p.getName().toUpperCase().contains(name.toUpperCase())) {
+            if (p.getPetName().toUpperCase().contains(name.toUpperCase())) {
                 matchingPets += pets.indexOf(p) + ": " + p + "\n";
             }
         }
