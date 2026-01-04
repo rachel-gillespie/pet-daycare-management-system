@@ -67,6 +67,6 @@ public class Dog extends Pet {
 
     @Override
     public String toString() {
-        return "Dog{" + "breed='" + breed + '\'' + ", dangerousBreed=" + dangerousBreed + "} " + super.toString();
+        return "Dog{" + "Breed = " + breed + '\'' + ", Dangerous Breed = " + dangerousBreed + "} " + super.toString();
     }
 }

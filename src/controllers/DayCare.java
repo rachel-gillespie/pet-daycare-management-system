@@ -4,6 +4,7 @@ import models.Cat;
 import models.Dog;
 import models.Pet;
 import utils.ISerializer;
+import utils.ScannerInput;
 import utils.Utilities;
 
 import com.thoughtworks.xstream.XStream;
@@ -18,7 +19,7 @@ import java.util.List;
 
 /**
  * DayCare
- * This DayCare class is responsible for storing and managing ALL the Pets in the system.
+ * This API class is responsible for storing and managing ALL the Pets in the system.
  *
  * @author Rachel Gillespie
  * @version 1.0
@@ -29,9 +30,9 @@ public class DayCare implements ISerializer {
     //------------------------------------
     //              FIELDS
     //------------------------------------
-    private List<Pet> pets;
+    private List<Pet> pets; //
     private String name = ""; //max 20 chars
-    private int maxNumberOfPets = 0;
+    private int maxNumberOfPets = 0; // the max number of pets the kennels has space for, can change over time
 
     //------------------------------------
     //            CONSTRUCTOR
@@ -673,6 +674,14 @@ public class DayCare implements ISerializer {
             }
         }
     }
+
+    private void todaysAttendance() {
+        String day = ScannerInput.readNextLine("What day is it: ");
+        for (Pet p : pets) {
+            daysAttending[i] = Utilities.YNtoBoolean(ScannerInput.readNextChar("Attending " + weekDays[i] + "? (y/n)"));
+        }
+    }
+
 
     //------------------------------------
     //     SEARCHING & SORTING METHODS

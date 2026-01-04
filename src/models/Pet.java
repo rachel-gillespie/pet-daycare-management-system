@@ -97,23 +97,23 @@ public abstract class Pet {
 
     public abstract double calculateWeeklyFee();
 
-    public void checkIn(int dayIndex) {
-        // if valid dayIndex >=0 <= 5
-        if ((dayIndex >= 0) && (dayIndex <= 5)) {
+    public void checkIn(int dayIndex) { // returns nothing. A number indicating the day of the week is passed to the method.
+        // if valid dayIndex >=0 < 5
+        if ((dayIndex >= 0) && (dayIndex < 5)) {
             //  assign that element of the array to true
             daysAttending[dayIndex] = true;
         }
     }
 
-    public void checkOut(int dayIndex) {
-        // if valid dayIndex >=0 <= 5
-        if ((dayIndex >= 0) && (dayIndex <= 5)) {
+    public void checkOut(int dayIndex) { // returns nothing. A number indicating the day of the week is passed to the method.
+        // if valid dayIndex >=0 < 5
+        if ((dayIndex >= 0) && (dayIndex < 5)) {
             //  assign that element of the array to false.
             daysAttending[dayIndex] = false;
         }
     }
 
-    public int numberOfDaysInKennel() {
+    public int numberOfDaysInKennel() { //
         // iterates through array
         int days = 0;
         for (int i = 0; i < daysAttending.length; i++) {
@@ -127,6 +127,6 @@ public abstract class Pet {
     }
 
     public String toString() {
-        return "Pet{" + "owner='" + owner + '\'' + ", age=" + age + ", sex=" + sex + ", daysAttending=" + Arrays.toString(daysAttending) + ", id=" + id + ", name='" + name + '\'' + '}';
+        return "Pet{" + "Owner = " + owner + '\'' + ", Age = " + age + ", Sex = " + sex + ", Days Attending = " + Arrays.toString(daysAttending) + ", ID = " + id + ", Name = " + name + '\'' + '}';
     }
 }

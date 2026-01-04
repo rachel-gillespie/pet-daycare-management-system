@@ -59,7 +59,7 @@ public class Cat extends Pet {
 
     @Override
     public String toString() {
-        return "Cat{" + "indoorCat=" + indoorCat + ", favouriteToy='" + favouriteToy + '\'' + "} " + super.toString();
+        return "Cat{" + "Indoor Cat = " + indoorCat + ", Favourite Toy = " + favouriteToy + '\'' + "} " + super.toString();
     }
 }
 

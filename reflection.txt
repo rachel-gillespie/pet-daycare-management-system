@@ -2,9 +2,9 @@ Name : Rachel Gillespie
 
 Student Number: 20118715
 
-- Chronology of your implementation (what you did first, etc...)
+Chronology of your implementation (what you did first, etc...):
 1) I started on the 'models' (Inheritance Hierarchy) part of the assignment as suggested in the 'Plan of Action/Attack'.
-- I wrote the code for Pet (abstract)
+- I wrote the code for Pet (abstract).
 - I wrote the code for Dog
 - I wrote the code for Cat
 
@@ -34,7 +34,7 @@ Student Number: 20118715
 - Added Rabbit and RabbitBreedUtility Classes
 
 Main difficulties you came across in your development of solution and how you solved them:
-    -
+    - Ran out of time
 
 Any bugs remaining in the solution or unfinished elements of spec:
     -
@@ -55,7 +55,8 @@ Answer the following questions:
      4. Besides cats and dogs, what additional animal does Pat plan to include next, and what does this imply for how you structure your inheritance hierarchy?
 
 
-Mandatory : Please list any references used in your development/ implementation of your submission.
+Mandatory : Please list any references used in your development/implementation of your submission.
+    - https://www.asciiart.eu/text-to-ascii-art
     -
 
 Please consider the following statements and choose one (delete the inappropriate one)

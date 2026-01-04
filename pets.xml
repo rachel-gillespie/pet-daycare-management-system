@@ -5,11 +5,11 @@
       <age>3</age>
       <sex>f</sex>
       <daysAttending>
+        <boolean>true</boolean>
         <boolean>false</boolean>
+        <boolean>true</boolean>
         <boolean>false</boolean>
-        <boolean>false</boolean>
-        <boolean>false</boolean>
-        <boolean>false</boolean>
+        <boolean>true</boolean>
       </daysAttending>
       <id>101</id>
       <name>Bella</name>
@@ -24,9 +24,9 @@
       <daysAttending>
         <boolean>false</boolean>
         <boolean>false</boolean>
+        <boolean>true</boolean>
         <boolean>false</boolean>
-        <boolean>false</boolean>
-        <boolean>false</boolean>
+        <boolean>true</boolean>
       </daysAttending>
       <id>102</id>
       <name>Whiskers</name>
