@@ -115,7 +115,7 @@ public class Driver {
         while (!daycare.isValidId(id)) {
             id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
         }
-        String petName = ScannerInput.readNextLine("Enter the Pet's petName: ");
+        String petName = ScannerInput.readNextLine("Enter the Pet's Name: ");
         char neuteredInput = ScannerInput.readNextChar("Is pet neutered? (y/n): ");
         while (neuteredInput != ('y') && neuteredInput != 'n') {
             neuteredInput = ScannerInput.readNextChar("Invalid option " + neuteredInput + " Is pet neutered? (y/n): ");
@@ -331,10 +331,10 @@ public class Driver {
                 daysAttending[i] = Utilities.YNtoBoolean(ScannerInput.readNextChar("Attending " + weekDays[i] + "? (y/n)"));
             }
             int id = ScannerInput.readNextInt("Enter Pet id number: ");
-            while (!daycare.isValidId(id)) {
-                id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
+            while (!daycare.isValidId(id) && id != idToUpdate) {
+                id = ScannerInput.readNextInt("Invalid Pet id (already in use), Enter another Pet id number: ");
             }
-            String petName = ScannerInput.readNextLine("Enter the Pet's petName: ");
+            String petName = ScannerInput.readNextLine("Enter the Pet's Name: ");
             char neuteredInput = ScannerInput.readNextChar("Is pet neutered? (y/n): ");
             while (neuteredInput != ('y') && neuteredInput != 'n') {
                 neuteredInput = ScannerInput.readNextChar("Invalid option " + neuteredInput + " Is pet neutered? (y/n): ");
@@ -445,7 +445,7 @@ public class Driver {
                 |         SEARCH & SORT PETS        |
                 -------------------------------------
                 |   1) Search Pets by Name          |
-                |   1) Sort Pets by Age             |
+                |   2) Sort Pets by Age             |
                 -------------------------------------
                 |   0) Return to Main Menu          |
                 -------------------------------------
