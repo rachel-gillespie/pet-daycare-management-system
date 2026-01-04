@@ -4,9 +4,10 @@ Student Number: 20118715
 
 Chronology of your implementation (what you did first, etc...):
 1) I started on the 'models' (Inheritance Hierarchy) part of the assignment as suggested in the 'Plan of Action/Attack'.
-- I wrote the code for Pet (abstract).
+- I wrote the code for Pet. Pet is abstract as it has an abstract method. I next declared the instance fields with private access and generated the constructor. I then generated getters and setters to modify and view the field values
 - I wrote the code for Dog
 - I wrote the code for Cat
+-
 
 2) I then moved onto the 'controllers' (DayCare Class)
 - Write dummy code for all methods (as per UML), this means write in the method headers and basic implementation to get the code compiled, at a later time you will write the implementation for each method.

@@ -676,10 +676,6 @@ public class DayCare implements ISerializer {
     }
 
     private void todaysAttendance() {
-        String day = ScannerInput.readNextLine("What day is it: ");
-        for (Pet p : pets) {
-            daysAttending[i] = Utilities.YNtoBoolean(ScannerInput.readNextChar("Attending " + weekDays[i] + "? (y/n)"));
-        }
     }
 
 

@@ -8,24 +8,24 @@ import java.util.Arrays;
  * The responsibility for this abstract class is to be the super class for the projects.
  */
 
-public abstract class Pet {
+public abstract class Pet { // Object Type/ Class Name. Pet must be abstract as it has an abstract method
 
     //------------------------------------
-    //              FIELDS
+    //              FIELDS                  i.e. the attributes of the class
     //------------------------------------
     private String owner = ""; //truncates to 20 chars
     private int age = 0;
     private char sex = 'f';
     private boolean[] daysAttending = new boolean[5];
     private int id = 1000;
-    private String name = ""; //truncates to 30 chars
+    private String name; //truncates to 30 chars
     private boolean neutered = false;
 
     //------------------------------------
     //            CONSTRUCTOR
     //------------------------------------
-    public Pet(String owner, int age, char sex, int id, String name, boolean neutered) {
-        this.owner = owner;
+    public Pet(String owner, int age, char sex, int id, String name, boolean neutered) { // these are the local variables/parameters
+        this.owner = owner; //this keyword is used to distinguish between the variables, this refers to the current object fields
         this.age = age;
         this.sex = sex;
         this.id = id;
@@ -84,7 +84,9 @@ public abstract class Pet {
     }
 
     public void setId(int id) {
-        this.id = id;
+        if ((id >= 1000) && id <= 9999) {
+            this.id = id;
+        }
     }
 
     public void setName(String name) {
@@ -95,7 +97,7 @@ public abstract class Pet {
         this.neutered = neutered;
     }
 
-    public abstract double calculateWeeklyFee();
+    public abstract double calculateWeeklyFee(); // all subclasses of this class will implement this method as part of its code
 
     public void checkIn(int dayIndex) { // returns nothing. A number indicating the day of the week is passed to the method.
         // if valid dayIndex >=0 < 5
@@ -126,7 +128,7 @@ public abstract class Pet {
         return days;
     }
 
-    public String toString() {
+    public String toString() { // builds and returns a String containing a user-friendly representation of the object state
         return "Pet{" + "Owner = " + owner + '\'' + ", Age = " + age + ", Sex = " + sex + ", Days Attending = " + Arrays.toString(daysAttending) + ", ID = " + id + ", Name = " + name + '\'' + '}';
     }
 }

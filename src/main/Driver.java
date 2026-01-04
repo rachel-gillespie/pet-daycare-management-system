@@ -378,15 +378,12 @@ public class Driver {
         }
     }
 
-    //---------------------
-    //  Delete Pet Method
-    //---------------------
     private void deletePetMenu() {
         if (daycare.numberOfPets() > 0) {
 
             int option = ScannerInput.readNextInt("""
                     -------------------------------------
-                    |           Delete Pet Menu         |
+                    |            DELETE A PET           |
                     -------------------------------------
                     |   1) Delete Pet by Index          |
                     |   2) Delete Pet by ID             |
@@ -442,13 +439,10 @@ public class Driver {
 
     }
 
-    //------------------------------------
-    //    SEARCHING AND SORTING METHODS
-    // ------------------------------------
     private void searchAndSortMenu() {
         int option = ScannerInput.readNextInt("""
                 -------------------------------------
-                |         SEARCH & SORT MENU        |
+                |         SEARCH & SORT PETS        |
                 -------------------------------------
                 |   1) Search Pets by Name          |
                 |   1) Sort Pets by Age             |
@@ -477,15 +471,9 @@ public class Driver {
     //      TODAYS ATTENDANCE METHOD
     // ------------------------------------
     private void todaysAttendance() {
-        String day = ScannerInput.readNextLine("What day is it: ");
-        for (Pet p : pets) {
-            daysAttending[i] = Utilities.YNtoBoolean(ScannerInput.readNextChar("Attending " + weekDays[i] + "? (y/n)"));
-        }
+
     }
 
-    //------------------------------------
-    //          DAYCARE SETTINGS
-    // ------------------------------------
     private void daycareSettings() {
         int option = ScannerInput.readNextInt("""
                 ---------------------------------------------------
@@ -508,6 +496,18 @@ public class Driver {
         }
     }
 
+    private void daycareName() {
+
+    }
+
+    private void petsList() {
+
+    }
+
+    private void maxNumPets() {
+
+    }
+
 //---------------------
 //  Helper Methods
 //---------------------
@@ -525,10 +525,10 @@ public class Driver {
 //    }
 
     //------------------------------------
-    // PERSISTENCE METHODS
+    //        PERSISTENCE METHODS
     // ------------------------------------
-    //save all the pets in the DayCare to a file on the hard disk
-    private void savePets () {
+//save all the pets in the DayCare to a file on the hard disk
+    private void savePets() {
         try {
             System.out.println("Saving to file: " + daycare.fileName());
             daycare.save();
@@ -538,7 +538,7 @@ public class Driver {
     }
 
     //load all the posts into the DayCare from a file on the hard disk
-    private void loadPets () {
+    private void loadPets() {
         try {
             System.out.println("Loading from file: " + daycare.fileName());
             daycare.load();
