@@ -82,12 +82,12 @@ src/
 2. Choose option 1 (Add a new Pet)
 3. Select pet type (Dog or Cat)
 4. Enter required information:
-    - Owner's petName
+    - Owner's Name
     - Pet's age
     - Sex (m/f)
     - Days attending (Mon-Fri)
     - Unique ID number
-    - Pet's petName
+    - Pet's Name
     - Neutered status
 
 #### Dog-Specific Fields
