@@ -321,7 +321,7 @@ public class Driver {
         showPets();
         if (daycare.numberOfPets() > 0) { // Checks if pets exist in the daycare
             int id = ScannerInput.readNextInt("Enter the id of the pet to update ==> ");
-            while (!daycare.isValidId(id)) { // Checks if the ID exists in the daycare
+            while (daycare.isValidId(id)) { // Checks if the ID exists in the daycare
                 id = ScannerInput.readNextInt("Invalid Pet id, Enter another Pet id number: ");
             }
             System.out.println("Pet you are updating: " + daycare.getPetById(id).toString());
