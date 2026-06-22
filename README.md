@@ -1,7 +1,7 @@
 # 🐾 Pet Daycare Management System
 
 ## Project Overview
-Pet Daycare Management System is a Java console application for managing a pet daycare facility. Staff can register dogs and cats, manage their records, generate reports, search the pet list, and calculate weekly income. Data is persisted between sessions using XML serialization. Built as part of a Higher Diploma in Computer Science, Object-Oriented Programming module.
+Pet Daycare Management System is a Java console application for managing a pet daycare facility. Staff can register dogs and cats, manage their records, generate reports, search the pet list, and calculate weekly income. Data is persisted between sessions using XML serialisation. Built as part of a Higher Diploma in Computer Science, Object-Oriented Programming module.
 
 ## Features
 - **Register pets** — add dogs or cats with full details (owner, age, sex, attendance days, breed, neutered status)
@@ -80,7 +80,8 @@ java -cp out:lib/xstream.jar main.Driver
 ## Reflection
 
 ### Architecture Choices
-- `Pet` is an abstract class with an abstract `calculateWeeklyFee()` method — each subclass (Dog, Cat, Rabbit) implements its own fee logic. This means the weekly income report works by iterating over an `ArrayList<Pet>` and calling `calculateWeeklyFee()` polymorphically, without needing to check the type of each pet.
+- `Pet` is an abstract class with an abstract `calculateWeeklyFee()` method — each subclass (Dog, Cat, Rabbit) implements its own fee logic. This means the weekly income report works by iterating over a `List<Pet>` and calling `calculateWeeklyFee()` polymorphically, without needing to check the type of each pet.
+- `List<Pet>` was used as the field type rather than `ArrayList<Pet>` to program to an interface rather than a concrete implementation. This means the underlying data structure can be swapped out in future without breaking any existing code.
 - The Controller/Model separation keeps all business logic in `DayCare.java` and all I/O in `Driver.java`. This makes it easier to test the logic independently of the user interface.
 - A custom `ScannerInput` utility class wraps the Scanner and handles buffer clearing, preventing common input issues when mixing `nextInt()` and `nextLine()`.
 - `Utilities.YNtoBoolean()` converts `y/n` char inputs to booleans consistently across the app.
@@ -92,11 +93,13 @@ java -cp out:lib/xstream.jar main.Driver
 
 ### Limitations
 - The `Rabbit` model class is fully implemented with fee logic, but the Driver's add-pet menu only presents Dog and Cat as options — Rabbit support isn't wired up to the UI.
+- Pet ID does not update correctly when editing a pet — the other fields update successfully but the ID change is not persisted.
 - `pets.xml` is saved to the project root directory; the path is not configurable.
 - No GUI — the application is console-only.
 
 ## Reference List
 - XStream XML Serialization — [XStream documentation](https://x-stream.github.io/)
-- Java ArrayList — [Oracle docs](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)
+- Why prefer `List` over `ArrayList` — [Stack Overflow](https://stackoverflow.com/questions/147468/why-should-the-interface-for-a-java-class-be-preferred)
+- Programming to an interface — [Stack Overflow](https://stackoverflow.com/questions/9852831/polymorphism-why-use-list-list-new-arraylist-instead-of-arraylist-list-n)
 - Abstract classes and polymorphism — [GeeksforGeeks](https://www.geeksforgeeks.org/java/abstract-classes-in-java/)
 - Java instanceof pattern matching — [Oracle JEP 394](https://openjdk.org/jeps/394)
