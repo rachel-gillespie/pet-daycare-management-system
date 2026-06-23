@@ -1,7 +1,7 @@
 # 🐾 Pet Daycare Management System
 
 ## Project Overview
-Pet Daycare Management System is a Java console application for managing a pet daycare facility. Staff can register dogs and cats, manage their records, generate reports, search the pet list, and calculate weekly income. Data is persisted between sessions using XML serialisation. Built as part of a Higher Diploma in Computer Science, Object-Oriented Programming module.
+Pet Daycare Management System is a Java console application for managing a pet daycare facility. Staff can register dogs and cats, manage their records, generate reports, search the pet list, and calculate weekly income. Data is persisted between sessions using XML serialization. Built as part of a Higher Diploma in Computer Science, Object-Oriented Programming module.
 
 ## Features
 - **Register pets** — add dogs or cats with full details (owner, age, sex, attendance days, breed, neutered status)
@@ -80,22 +80,19 @@ java -cp out:lib/xstream.jar main.Driver
 ## Reflection
 
 ### Architecture Choices
-- `Pet` is an abstract class with an abstract `calculateWeeklyFee()` method — each subclass (Dog, Cat, Rabbit) implements its own fee logic. This means the weekly income report works by iterating over a `List<Pet>` and calling `calculateWeeklyFee()` polymorphically, without needing to check the type of each pet.
-- `List<Pet>` was used as the field type rather than `ArrayList<Pet>` to program to an interface rather than a concrete implementation. This means the underlying data structure can be swapped out in future without breaking any existing code.
-- The Controller/Model separation keeps all business logic in `DayCare.java` and all I/O in `Driver.java`. This makes it easier to test the logic independently of the user interface.
-- A custom `ScannerInput` utility class wraps the Scanner and handles buffer clearing, preventing common input issues when mixing `nextInt()` and `nextLine()`.
-- `Utilities.YNtoBoolean()` converts `y/n` char inputs to booleans consistently across the app.
-- XStream was used for XML serialization as it requires minimal setup and produces human-readable output that's easy to debug.
+- `Pet` is an abstract class with an abstract `calculateWeeklyFee()` method — each subclass (Dog, Cat, Rabbit) overrides this method with its own fee logic.
+- `List<Pet>` was used as the field type rather than `ArrayList<Pet>` to program to an interface rather than a concrete implementation. This provides flexibility to change the underlying implementation without breaking existing code.
+- `updatePet` returns a boolean rather than a Pet object, making it easier to check whether the update was successful.
+- `isValidIndex()` from the `Utilities` class was used instead of writing a separate validation method in `DayCare`.
 
-### Trade-offs
-- String concatenation is used in the reporting methods rather than `StringBuilder`. For small datasets this is fine, but it would become inefficient with a large number of pets.
-- Some menu options — Check In/Out, Today's Attendance, and Sort — are implemented as empty stubs. The menu is fully wired up for future expansion, but these features were out of scope for the submission.
+### Extras (beyond the original spec)
+- Added `Rabbit` and `RabbitBreedUtility` classes
+- Added a DayCare Settings menu
+- Added a clear, structured menu system
 
 ### Limitations
-- The `Rabbit` model class is fully implemented with fee logic, but the Driver's add-pet menu only presents Dog and Cat as options — Rabbit support isn't wired up to the UI.
 - Pet ID does not update correctly when editing a pet — the other fields update successfully but the ID change is not persisted.
-- `pets.xml` is saved to the project root directory; the path is not configurable.
-- No GUI — the application is console-only.
+- Ran out of time to complete the project to the standard originally intended; focus was on ensuring all completed features work without bugs.
 
 ## Reference List
 - XStream XML Serialization — [XStream documentation](https://x-stream.github.io/)
